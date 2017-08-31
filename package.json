@@ -1,0 +1,16 @@
+{
+  "name": "Dashboard",
+  "version": "1.0.0",
+  "description": "A dashboard for common household needs.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Rawson Inc",
+  "devDependencies": {
+    "electron": "~1.7.5"
+  },
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}

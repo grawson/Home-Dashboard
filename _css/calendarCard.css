@@ -1,0 +1,52 @@
+@import url("./colors.css");
+
+.calendar-dow-container {
+  color: var(--lightGray);
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto;
+  grid-template-rows: 50px;
+  width: 90%;
+  margin: 0 auto;
+  grid-gap: 20px;
+}
+
+.calendar-dow-container > div, .calendar-week-container > div {
+  text-align: center;
+}
+
+.calendar-week-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto;
+  grid-template-rows: 20.9vh;
+  grid-gap: 20px;
+  width: 90%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.event-content-container {
+  padding-bottom: 5px;
+  width: 100%;
+  height: 15px;
+  position: relative;
+}
+
+.event-tag {
+  background-color: green;
+  width: 2px;
+  background: var(--tint1);
+  height: 100%;
+  float: left;
+}
+
+.event-details {
+  margin-left: 4px;
+  position: absolute;
+  height: 100%;
+  font-size: 10pt;
+  text-align: left;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
