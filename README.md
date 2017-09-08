@@ -10,6 +10,8 @@ All features are separate modules on the dashboard, which will allow room for mo
 
 # To Run
 The project is built using Electron, so all you need to do is:
+```
 npm install && npm start
+```
 
 Enjoy!
