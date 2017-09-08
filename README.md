@@ -7,3 +7,9 @@ The project is in the works, but the features will include:
 3. Weather forecast
 
 All features are separate modules on the dashboard, which will allow room for more features to come!
+
+# To Run
+The project is built using Electron, so all you need to do is:
+npm install && npm start
+
+Enjoy!
