@@ -1,23 +1,23 @@
-<h3 class="card-header">Sunday March 24th</h3>
+<h3 class="card-header">{{currentDay}}</h3>
 
 <div class="calendar-dow-container">
     {{#dow}}
-    <div><p>{{dow-title}}</p></div>
+    <div><p>{{dowTitle}}</p></div>
     {{/dow}}
 </div>
 
 {{#weeks}}
 <div class="card-separator"></div>
-<div class="calendar-week-container" id="week-{{week-number}}">
+<div class="calendar-week-container" id="week-{{weekNumber}}">
 
     {{#days}}
     <div>
-        <p class="day-number">{{day-number}}</p>
+        <p class="day-number">{{dayNumber}}</p>
 
         {{#events}}
         <div class="event-content-container">
           <div class="event-tag"></div>
-          <div class="event-details">{{event-title}}</div>
+          <div class="event-details">{{eventTitle}}</div>
         </div>
         {{/events}}
 
