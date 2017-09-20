@@ -16,8 +16,9 @@
 
         {{#events}}
         <div class="event-content-container">
-          <div class="event-tag"></div>
+          <!-- <div class="event-tag"></div> -->
           <div class="event-details">{{eventTitle}}</div>
+          <div class="event-time">4:30 PM</div>
         </div>
         {{/events}}
 

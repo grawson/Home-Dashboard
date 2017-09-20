@@ -25,28 +25,31 @@
 }
 
 .event-content-container {
-  padding-bottom: 5px;
-  width: 100%;
-  height: 15px;
-  position: relative;
+    overflow:hidden;
+}
+
+.event-content-container div {
+    width:50%;
+    display: inline-block;
+    /*float:left;*/
 }
 
 .event-tag {
   background-color: green;
   width: 2px;
   background: var(--tint1);
-  height: 100%;
-  float: left;
+  /*height: 100%;*/
+  /*float: left;*/
 }
 
-.event-details {
-  margin-left: 4px;
-  position: absolute;
-  height: 100%;
+.event-detail {
   font-size: 10pt;
-  text-align: left;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+}
+
+.event-time {
+    /*height: 100%;*/
+    /*width: 10%;*/
+    float: right;
+    font-size: 10pt;
+    text-align: right;
 }
