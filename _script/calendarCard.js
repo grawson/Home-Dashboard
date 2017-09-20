@@ -32,22 +32,25 @@ function listEvents(auth, callback) {
             for (var i = 0; i < events.length; i++) {
                 var event = events[i];
                 var start = event.start.dateTime || event.start.date;
+                var startDate = new Date(start);
 
                 console.log("%s - %s", start, event.summary);
 
-                // remove time
-                var timeIndex = start.indexOf("T");
-                var startDate = start;
-                if (timeIndex != -1) {
-                     startDate = start.substring(0, timeIndex);
-                 }
-                startDate = startDate.replace("-0", "-"); //remove padding
+                //TODO: Multiday event parsing
+
+                 // All day event: time zone must be set to UTC +0
+                if (start.indexOf("T") == -1) {
+                    // Will change the time and date, but not the time zone tag
+                    var timeZone = startDate.getTimezoneOffset() / 60
+                    startDate.setUTCHours(timeZone);
+                }
 
                 // Add to events data
-                if (eventData[startDate] == null) {
-                    eventData[startDate] = [];
+                var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate()
+                if (eventData[dateStr] == null) {
+                    eventData[dateStr] = [];
                 }
-                eventData[startDate].push(event.summary);
+                eventData[dateStr].push(event.summary);
             }
         }
         callback(eventData);
@@ -75,7 +78,9 @@ function render(eventData) {
 
     var currDay = 1;
     data.weeks = []
-    for (var i = 1; i <= Math.ceil((numDaysInMonth+firstDOM)/7.0); i++) { // Only create necessary # rows in calendar
+    var numRows = Math.ceil((numDaysInMonth+firstDOM)/7.0)
+    data.weekHeight = 100/numRows; // dynamically calc week height
+    for (var i = 1; i <= numRows ; i++) { // Only create necessary # rows in calendar
 
         data.weeks.push([{"weekNumber": i}]);
 

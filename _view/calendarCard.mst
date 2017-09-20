@@ -8,7 +8,7 @@
 
 {{#weeks}}
 <div class="card-separator"></div>
-<div class="calendar-week-container" id="week-{{weekNumber}}">
+<div style="height: calc({{weekHeight}}% - 22px);" class="calendar-week-container" id="week-{{weekNumber}}">
 
     {{#days}}
     <div>
