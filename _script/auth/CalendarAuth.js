@@ -37,7 +37,7 @@ exports.authorize = function(callback) {
         // Check if we have previously stored a token.
         fs.readFile(TOKEN_PATH, function(err, token) {
             if (err) {
-                getNewToken(oauth2Client, callback);
+                getNewToken(oauth2Client);
             } else {
                 oauth2Client.credentials = JSON.parse(token);
                 callback(oauth2Client);
@@ -54,7 +54,7 @@ exports.authorize = function(callback) {
 * @param {getEventsCallback} callback The callback to call with the authorized
 *     client.
 */
-function getNewToken(oauth2Client, callback) {
+function getNewToken(oauth2Client) {
     var authUrl = oauth2Client.generateAuthUrl({
         access_type: 'offline',
         scope: SCOPES
@@ -73,7 +73,6 @@ function getNewToken(oauth2Client, callback) {
             }
             oauth2Client.credentials = token;
             storeToken(token);
-            callback(oauth2Client);
         });
     });
 }

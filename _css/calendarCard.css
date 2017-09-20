@@ -17,7 +17,7 @@
 .calendar-week-container {
   display: grid;
   grid-template-columns: auto auto auto auto auto auto auto;
-  grid-template-rows: 20.9vh;
+  grid-template-rows: 12.9vh;
   grid-gap: 20px;
   width: 90%;
   margin: 0 auto;
