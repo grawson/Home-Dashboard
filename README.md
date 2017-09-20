@@ -9,7 +9,11 @@ The project is in the works, but the features will include:
 All features are separate modules on the dashboard, which will allow room for more features to come!
 
 # To Run
-The project is built using Electron, so all you need to do is:
+The project is built using Electron. Begin by adding a client_secret.json file for Google Calendar authentication.
+
+To authenticate, run command ```./auth.sh``` and follow on-screen instructions.
+
+Once authenticated, run
 ```
 npm install && npm start
 ```

@@ -32,11 +32,12 @@ function listEvents(auth, callback) {
             for (var i = 0; i < events.length; i++) {
                 var event = events[i];
                 var start = event.start.dateTime || event.start.date;
+                var end = event.end.dateTime || event.end.date;
                 var startDate = new Date(start);
+                var endDate = new Date(end);
 
-                console.log("%s - %s", start, event.summary);
-
-                //TODO: Multiday event parsing
+                // console.log("%s - %s", startDate, event.summary);
+                // console.log("%s - %s", endDate, event.summary);
 
                  // All day event: time zone must be set to UTC +0
                 if (start.indexOf("T") == -1) {
@@ -46,11 +47,21 @@ function listEvents(auth, callback) {
                 }
 
                 // Add to events data
-                var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate()
-                if (eventData[dateStr] == null) {
-                    eventData[dateStr] = [];
+                if (startDate.getDate() == endDate.getDate()) { // single day event
+                    var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate()
+                    if (eventData[dateStr] == null) {
+                        eventData[dateStr] = [];
+                    }
+                    eventData[dateStr].push(event.summary);
+                } else { // multi day event
+                    for (j = startDate.getDate(); j <= endDate.getDate(); j++) {
+                        var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + j
+                        if (eventData[dateStr] == null) {
+                            eventData[dateStr] = [];
+                        }
+                        eventData[dateStr].push(event.summary);
+                    }
                 }
-                eventData[dateStr].push(event.summary);
             }
         }
         callback(eventData);
