@@ -44,22 +44,46 @@ function listEvents(auth, callback) {
                     // Will change the time and date, but not the time zone tag
                     var timeZone = startDate.getTimezoneOffset() / 60
                     startDate.setUTCHours(timeZone);
-                }
-
-                // Add to events data
-                if (startDate.getDate() == endDate.getDate()) { // single day event
                     var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate()
                     if (eventData[dateStr] == null) {
                         eventData[dateStr] = [];
                     }
-                    eventData[dateStr].push(event.summary);
-                } else { // multi day event
+                    eventData[dateStr].push({
+                        "summary": event.summary,
+                        "start": "All"
+                    });
+                }
+
+                // Add to events data
+                else if (startDate.getDate() == endDate.getDate()) { // single day event
+                    var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate()
+                    if (eventData[dateStr] == null) {
+                        eventData[dateStr] = [];
+                    }
+                    eventData[dateStr].push({
+                        "summary": event.summary,
+                        "start": time(startDate)
+                    });
+
+                // multi day event
+                } else {
                     for (j = startDate.getDate(); j <= endDate.getDate(); j++) {
                         var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + j
                         if (eventData[dateStr] == null) {
                             eventData[dateStr] = [];
                         }
-                        eventData[dateStr].push(event.summary);
+
+                        var startLabel = "All";
+                        if (j == startDate.getDate()) { // fist day of multi day event
+                            startLabel = time(startDate);
+                        } else if (j == endDate.getDate()) { // last day
+                            startLabel = "12:00 AM"
+                        }
+
+                        eventData[dateStr].push({
+                            "summary": event.summary,
+                            "start": startLabel
+                        });
                     }
                 }
             }
@@ -113,7 +137,8 @@ function render(eventData) {
             if (eventData[dateLabel] != null) {
                 for (var k = 0; k < eventData[dateLabel].length; k++) {
                     data.weeks[i-1].days[j].events.push({
-                        "eventTitle": eventData[dateLabel][k]
+                        "eventTitle": eventData[dateLabel][k]["summary"],
+                        "eventTime": eventData[dateLabel][k]["start"]
                     });
                 }
             }
@@ -127,6 +152,7 @@ function render(eventData) {
     });
 }
 
+
 function ordinalSuffixOf(i) {
     var j = i % 10, k = i % 100;
     if (j == 1 && k != 11) { return i + "st"; }
@@ -134,6 +160,16 @@ function ordinalSuffixOf(i) {
     if (j == 3 && k != 13) { return i + "rd"; }
     return i + "th";
 }
+
+
+function time(date) {
+    var hrs = date.getHours() % 12;
+    var meridiem = date.getHours() >= 12 ? "PM" : "AM"
+    var min = date.getMinutes()
+    if (min < 10) { min = "0" + min };
+    return hrs + ":" + min + " " + meridiem;
+}
+
 
 window.onload = function(){
 

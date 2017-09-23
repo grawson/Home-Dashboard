@@ -32,7 +32,7 @@
     float: left;
     text-overflow: ellipsis;
     white-space: nowrap;
-    height: 15px;
+    height: 16.2px;
     margin-bottom: 4px;
 }
 
@@ -45,8 +45,9 @@
 
 .event-time {
     text-align: right;
+    margin-top: 4px;
     width: 46%;
-    font-size: 8pt;
+    font-size: 7pt;
     margin-left: 3%;
     color: var(--lightGray);
 }
