@@ -1,55 +1,61 @@
 @import url("./colors.css");
 
 .calendar-dow-container {
-  color: var(--lightGray);
-  display: grid;
-  grid-template-columns: auto auto auto auto auto auto auto;
-  grid-template-rows: 50px;
-  width: 90%;
-  margin: 0 auto;
-  grid-gap: 20px;
+    color: var(--lightGray);
+    display: grid;
+    grid-template-columns: 12.45% 12.45% 12.45% 12.45% 12.45% 12.45% 12.45%;
+    grid-template-rows: 50px;
+    width: 90%;
+    margin: 0 auto;
+    grid-gap: 20px;
 }
 
 .calendar-dow-container > div, .calendar-week-container > div {
-  text-align: center;
+    text-align: center;
 }
 
 .calendar-week-container {
-  display: grid;
-  grid-template-columns: auto auto auto auto auto auto auto;
-  /*height from html*/
-  grid-gap: 20px;
-  width: 90%;
-  margin: 0 auto;
-  overflow: hidden;
+    display: grid;
+    grid-template-columns: 12.45% 12.45% 12.45% 12.45% 12.45% 12.45% 12.45%;
+    /*height from html*/
+    grid-gap: 20px;
+    width: 90%;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
 .event-content-container {
-    overflow:hidden;
+    height: 10px;
 }
 
 .event-content-container div {
-    width:50%;
-    display: inline-block;
-    /*float:left;*/
+    float: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 15px;
+    margin-bottom: 4px;
 }
 
 .event-tag {
-  background-color: green;
-  width: 2px;
-  background: var(--tint1);
-  /*height: 100%;*/
-  /*float: left;*/
-}
-
-.event-detail {
-  font-size: 10pt;
+    width: 2%;
+    background-color: var(--tint1);
+    border-radius: 10px;
+    margin-right: 3%;
 }
 
 .event-time {
-    /*height: 100%;*/
-    /*width: 10%;*/
-    float: right;
-    font-size: 10pt;
     text-align: right;
+    width: 46%;
+    font-size: 8pt;
+    margin-left: 3%;
+    color: var(--lightGray);
+}
+
+.event-details {
+    font-size: 10pt;
+    width: 46%;
+    text-align: left;
+    max-width: 100%;
+    overflow: hidden;
+
 }

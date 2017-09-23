@@ -9,7 +9,7 @@ body {
 .cards-container {
   padding: 10px;
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 33.33% 33.33% calc(33.33% - 40px);
   grid-template-rows: 47vh 47vh;
   grid-gap: 20px;
 }
