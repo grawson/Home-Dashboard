@@ -131,6 +131,11 @@ function render(eventData) {
             }
             data.weeks[i-1].days.push({"dayNumber": currDayLabel});
 
+            // Color today
+            if (currDayLabel === today.getDate()) {
+                data.weeks[i-1].days[j].dayColor = "today";
+            }
+
             // Events
             var dateLabel = (today.getFullYear()) + "-" + (today.getMonth()+1) + "-" + (currDayLabel);
             data.weeks[i-1].days[j].events = []

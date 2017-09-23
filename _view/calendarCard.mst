@@ -12,7 +12,7 @@
 
     {{#days}}
     <div>
-        <p class="day-number">{{dayNumber}}</p>
+        <p class="day-number {{dayColor}}">{{dayNumber}}</p>
 
         {{#events}}
         <div class="event-content-container">
