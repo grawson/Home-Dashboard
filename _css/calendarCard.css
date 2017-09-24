@@ -42,7 +42,7 @@
 }
 
 .event-tag {
-    width: 2%;
+    width: 2px;
     background-color: var(--tint1);
     border-radius: 10px;
     margin-right: 3%;
@@ -51,7 +51,7 @@
 .event-time {
     text-align: right;
     margin-top: 4px;
-    width: 46%;
+    width: calc(47% - 1px);
     font-size: 7pt;
     margin-left: 3%;
     color: var(--lightGray);
@@ -59,7 +59,7 @@
 
 .event-details {
     font-size: 10pt;
-    width: 46%;
+    width: calc(47% - 1px);
     text-align: left;
     max-width: 100%;
     overflow: hidden;

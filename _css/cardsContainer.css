@@ -1,36 +1,39 @@
 @import url("colors.css");
 @import url("fonts.css");
 
-body {
+body, html {
   background-color: var(--background);
   font-family: "Lato Regular";
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .cards-container {
   padding: 10px;
   display: grid;
-  grid-template-columns: 33.33% 33.33% calc(33.33% - 40px);
-  grid-template-rows: 47vh 47vh;
-  grid-gap: 20px;
+  grid-template-columns: repeat(5, calc(20% - 6px));
+  grid-template-rows: repeat(2, calc(50% - 15px));
+  grid-gap: 10px;
 }
 
 #calendar-card {
   grid-column-start: 1;
-  grid-column-end: 3;
+  grid-column-end: 5;
   grid-row-start: 1;
   grid-row-end: 3;
 }
 
-#card-2 {
-  grid-column-start: 3;
-  grid-column-end: 4;
+#today-card {
+  grid-column-start: 5;
+  grid-column-end: 6;
   grid-row-start: 1;
   grid-row-end: 2;
 }
 
-#card-3 {
-  grid-column-start: 3;
-  grid-column-end: 4;
+#weather-card {
+  grid-column-start: 5;
+  grid-column-end: 6;
   grid-row-start: 2;
   grid-row-end: 3;
 }

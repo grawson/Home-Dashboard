@@ -3,7 +3,7 @@ const calendarAuth = require('./auth/CalendarAuth');
 const google = require('googleapis');
 
 
-const DOW = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+const DOW = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
                 "August", "September", "October", "November", "December"];
 
@@ -50,7 +50,7 @@ function listEvents(auth, callback) {
                     }
                     eventData[dateStr].push({
                         "summary": event.summary,
-                        "start": "All"
+                        "start": "All Day"
                     });
                 }
 
@@ -73,7 +73,7 @@ function listEvents(auth, callback) {
                             eventData[dateStr] = [];
                         }
 
-                        var startLabel = "All";
+                        var startLabel = "All Day";
                         if (j == startDate.getDate()) { // fist day of multi day event
                             startLabel = time(startDate);
                         } else if (j == endDate.getDate()) { // last day
@@ -176,7 +176,7 @@ function time(date) {
 }
 
 
-window.onload = function(){
+$(document).ready(function() {
 
     calendarAuth.authorize(function(auth) {
 
@@ -186,4 +186,4 @@ window.onload = function(){
 
     });
 
-};
+});
