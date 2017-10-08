@@ -37,7 +37,7 @@ http://cdn.apixu.com/weather/64x64/day/113.png
 }
 
 function loadWeather(callback) {
-    var key = "";
+    var key = "623028cc072c4e76a8b210502172309";
     var url = "https://api.apixu.com/v1/forecast.json?key="+key+"&q=10804&days=8";
     $.getJSON(url, function(json){
         callback(json);

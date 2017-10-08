@@ -42,7 +42,7 @@ function listEvents(auth, callback) {
                  // All day event: time zone must be set to UTC +0
                 if (start.indexOf("T") == -1) {
                     // Will change the time and date, but not the time zone tag
-                    var timeZone = startDate.getTimezoneOffset() / 60
+                    var timeZone = startDate.getTimezoneOffset() / 60;
                     startDate.setUTCHours(timeZone);
                     var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate()
                     if (eventData[dateStr] == null) {
@@ -93,27 +93,27 @@ function listEvents(auth, callback) {
 }
 
 function render(eventData) {
-    data = {}
+    data = {};
 
     // Current day
     var today = new Date();
-    data.currentDay = DOW[today.getDay()]
-                    + ", " + MONTHS[today.getMonth()]
-                    + " " + ordinalSuffixOf(today.getDate());
+    data.currentDay = DOW[today.getDay()] +
+                        ", " + MONTHS[today.getMonth()] +
+                         " " + ordinalSuffixOf(today.getDate()-1);
 
     // Days of week
-    data.dow = []
+    data.dow = [];
     for (var i = 0; i < 7; i++) {
         data.dow.push({"dowTitle": DOW[i].charAt(0)});
     }
 
     // Calculate start and end of the month
-    var firstDOM = new Date(today.getYear(), today.getMonth()+1, 1).getDay()
+    var firstDOM = new Date(today.getYear(), today.getMonth()+1, 1).getDay()-1;
     var numDaysInMonth = new Date(today.getYear(), today.getMonth()+1, 0).getDate();
 
     var currDay = 1;
-    data.weeks = []
-    var numRows = Math.ceil((numDaysInMonth+firstDOM)/7.0)
+    data.weeks = [];
+    var numRows = Math.ceil((numDaysInMonth+firstDOM)/7.0);
     data.weekHeight = 100/numRows; // dynamically calc week height
     for (var i = 1; i <= numRows ; i++) { // Only create necessary # rows in calendar
 
@@ -132,7 +132,7 @@ function render(eventData) {
             data.weeks[i-1].days.push({"dayNumber": currDayLabel});
 
             // Color today
-            if (currDayLabel === today.getDate()) {
+            if (currDayLabel === today.getDate()-1) {
                 data.weeks[i-1].days[j].dayColor = "today";
             }
 
@@ -169,9 +169,9 @@ function ordinalSuffixOf(i) {
 
 function time(date) {
     var hrs = date.getHours() % 12;
-    var meridiem = date.getHours() >= 12 ? "PM" : "AM"
-    var min = date.getMinutes()
-    if (min < 10) { min = "0" + min };
+    var meridiem = date.getHours() >= 12 ? "PM" : "AM";
+    var min = date.getMinutes();
+    if (min < 10) { min = "0" + min; }
     return hrs + ":" + min + " " + meridiem;
 }
 
