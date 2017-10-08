@@ -8,17 +8,25 @@ const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
                 "August", "September", "October", "November", "December"];
 
 
+var today = new Date();
+// today.setMonth(today.getMonth()+1);
+
 
 function listEvents(auth, callback) {
     var eventData = {};
     var calendar = google.calendar('v3');
-    var today = new Date();
+
+    // Bounds of query
+    var prevMonth = prevMonthDate(today);
+    prevMonth.setDate(20);
+    var nextMonth = nextMonthDate(today);
+    nextMonth.setDate(8);
 
     calendar.events.list({
         auth: auth,
         calendarId: 'primary',
-        timeMin: (new Date(today.getFullYear(), today.getMonth(), 1)).toISOString(),
-        timeMax: (new Date(today.getFullYear(), (today.getMonth()%12)+1, 1)).toISOString(),
+        timeMin: prevMonth.toISOString(),
+        timeMax: nextMonth.toISOString(),
         maxResults: 500,
         singleEvents: true,
         orderBy: 'startTime'
@@ -38,7 +46,7 @@ function listEvents(auth, callback) {
                 var startDate = new Date(start);
                 var endDate = new Date(end);
 
-                console.log("%s - %s", startDate, event.summary);
+                // console.log("%s - %s", startDate, event.summary);
                 // console.log("%s - %s", endDate, event.summary);
 
                  // All day event: time zone must be set to UTC +0
@@ -98,10 +106,9 @@ function render(eventData) {
     data = {};
 
     // Current day
-    var today = new Date();
     data.currentDay = DOW[today.getDay()] +
                         ", " + MONTHS[today.getMonth()] +
-                         " " + ordinalSuffixOf(today.getDate()-1);
+                         " " + ordinalSuffixOf(today.getDate());
 
     // Days of week
     data.dow = [];
@@ -112,8 +119,13 @@ function render(eventData) {
     // Calculate start and end of the month
     var firstDOM = new Date(today.getYear(), today.getMonth()+1, 1).getDay()-1;
     var numDaysInMonth = new Date(today.getYear(), today.getMonth()+1, 0).getDate();
+    var prevMonth = prevMonthDate(today);
+    var numDaysInPrevMonth = new Date(prevMonth.getYear(), prevMonth.getMonth()+1, 0).getDate()+1;
 
     var currDay = 1;
+    var currDayOffMonth = 1;
+    var prevMonthDayOffset = firstDOM;
+
     data.weeks = [];
     var numRows = Math.ceil((numDaysInMonth+firstDOM)/7.0);
     data.weekHeight = 100/numRows; // dynamically calc week height
@@ -126,28 +138,36 @@ function render(eventData) {
         for (var j = 0; j < 7; j++) {
 
             // Make sure day number is in the current month
-            var currDayLabel = " ";
             if (currDay <= numDaysInMonth && (j >= firstDOM || i > 1)) {
-                currDayLabel = currDay;
+                currDayOffMonth = 1;
+                data.weeks[i-1].days.push({
+                    "dayNumber": currDay,
+                    "dayColor": currDay === today.getDate() ? "today" : ""
+                });
+
+                dateOfEvent = new Date(today.valueOf());
+                dateOfEvent.setDate(currDay);
+                initEvents(dateOfEvent, data.weeks[i-1].days[j], eventData);
                 currDay++;
-            }
-            data.weeks[i-1].days.push({"dayNumber": currDayLabel});
 
-            // Color today
-            if (currDayLabel === today.getDate()-1) {
-                data.weeks[i-1].days[j].dayColor = "today";
-            }
+            // Else either before or after this month
+            } else {
 
-            // Events
-            var dateLabel = (today.getFullYear()) + "-" + (today.getMonth()+1) + "-" + (currDayLabel);
-            data.weeks[i-1].days[j].events = []
-            if (eventData[dateLabel] != null) {
-                for (var k = 0; k < eventData[dateLabel].length; k++) {
-                    data.weeks[i-1].days[j].events.push({
-                        "eventTitle": eventData[dateLabel][k]["summary"],
-                        "eventTime": eventData[dateLabel][k]["start"]
-                    });
+                var currDayLabel = (j < firstDOM && i <= 1) ? numDaysInPrevMonth - prevMonthDayOffset : currDayOffMonth;
+                if (j < firstDOM && i <= 1) {
+                    prevMonthDayOffset -= 1;
+                } else {
+                    currDayOffMonth++;
                 }
+
+                data.weeks[i-1].days.push({
+                    "dayNumber": currDayLabel,
+                    "dayColor": "off-month"
+                });
+
+                dateOfEvent = (j < firstDOM && i <= 1) ? prevMonthDate(today) : nextMonthDate(today);
+                dateOfEvent.setDate(currDayLabel);
+                initEvents(dateOfEvent, data.weeks[i-1].days[j], eventData);
             }
         }
     }
@@ -157,6 +177,21 @@ function render(eventData) {
        var rendered = Mustache.render(template, data);
        $('#calendar-card').html(rendered);
     });
+}
+
+
+// Init events mustache data
+function initEvents(dateOfEvent, data, eventData) {
+    var dateLabel = dateOfEvent.getFullYear() + "-" + (dateOfEvent.getMonth()+1) + "-" + dateOfEvent.getDate();
+    data.events = [];
+    if (eventData[dateLabel] != null) {
+        for (var k = 0; k < eventData[dateLabel].length; k++) {
+            data.events.push({
+                "eventTitle": eventData[dateLabel][k].summary,
+                "eventTime": eventData[dateLabel][k].start
+            });
+        }
+    }
 }
 
 
@@ -175,6 +210,30 @@ function time(date) {
     var min = date.getMinutes();
     if (min < 10) { min = "0" + min; }
     return hrs + ":" + min + " " + meridiem;
+}
+
+// set month and year of prev month. day needs to be set depending on use case.
+function prevMonthDate(currDate) {
+    var prev = new Date(currDate.valueOf());
+    if (currDate.getMonth() === 1) {
+        prev.setMonth(12);
+        prev.setFullYear(currDate.getFullYear()-1);
+    } else {
+        prev.setMonth(currDate.getMonth()-1);
+    }
+    return prev;
+}
+
+// set month and year of next month. day needs to be set depending on use case.
+function nextMonthDate(currDate) {
+    var next = new Date(currDate.valueOf());
+    if (currDate.getMonth() === 12) {
+        next.setMonth(1);
+        next.setFullYear(currDate.getFullYear()+1);
+    } else {
+        next.setMonth(currDate.getMonth()+1);
+    }
+    return next;
 }
 
 

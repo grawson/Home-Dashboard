@@ -7,3 +7,8 @@
   font-family: "Lato Regular";
   src: url("../_assets/fonts/Lato-Regular.ttf");
 }
+
+@font-face {
+  font-family: "Lato Thin";
+  src: url("../_assets/fonts/Lato-Thin.ttf");
+}

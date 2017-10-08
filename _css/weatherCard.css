@@ -9,7 +9,13 @@
     grid-gap: 4%;
 }
 
-.forecast div {
+.forecast-content-container {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.forecast-content-container  div {
     position: relative;
     text-align: center;
     padding: 0;
@@ -17,27 +23,23 @@
 }
 
 .forecast-icon-container {
-    height: 50%;
+    height: 40px;
     vertical-align: middle;
 }
 
 .forecast-icon {
     position: absolute;
-     top: 0;
-     right: 0;
-     bottom: 0;
-     left: 0;
-     margin: auto;
-     max-width: 80%;
-     max-height: 90%
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    max-width: 80%;
+    max-height: 90%
 }
 
 .forecast-day {
-    height: 25%;
     color: var(--lightGray);
     font-family: "Lato Light";
-}
-
-.forecast-temp {
-    height: 25%;
+    margin-bottom: 5px;
 }

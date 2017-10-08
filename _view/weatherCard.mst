@@ -5,11 +5,15 @@
 
     {{#forecast}}
     <div class="forecast">
-        <div class="forecast-icon-container">
-            <img class="forecast-icon" src="{{forecastIcon}}">
+        <div class="forecast-content-container">
+
+            <div class="forecast-icon-container">
+                <img class="forecast-icon" src="{{forecastIcon}}">
+            </div>
+            <div class="forecast-day">{{forecastDay}}</div>
+            <div class="forecast-temp">{{forecastTemp}}</div>
         </div>
-        <div class="forecast-day">{{forecastDay}}</div>
-        <div class="forecast-temp">{{forecastTemp}}</div>
+
     </div>
     {{/forecast}}
 

@@ -12,7 +12,7 @@ function render(weatherData) {
 http://cdn.apixu.com/weather/64x64/day/113.png
     data = {}
 
-    data.currentWeather = weatherData.current.temp_f + "˚ and " +
+    data.currentWeather = weatherData.current.temp_f + "˚ " +
                           (weatherData.current.condition.text).capitalize();
 
     data.forecast = [];
