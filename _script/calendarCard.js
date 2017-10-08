@@ -13,11 +13,13 @@ function listEvents(auth, callback) {
     var eventData = {};
     var calendar = google.calendar('v3');
     var today = new Date();
+
     calendar.events.list({
         auth: auth,
         calendarId: 'primary',
-        timeMin: (new Date(today.getYear(), today.getMonth()+1, 1)).toISOString(),
-        maxResults: 2500,
+        timeMin: (new Date(today.getFullYear(), today.getMonth(), 1)).toISOString(),
+        timeMax: (new Date(today.getFullYear(), (today.getMonth()%12)+1, 1)).toISOString(),
+        maxResults: 500,
         singleEvents: true,
         orderBy: 'startTime'
     }, function(err, response) {
@@ -36,7 +38,7 @@ function listEvents(auth, callback) {
                 var startDate = new Date(start);
                 var endDate = new Date(end);
 
-                // console.log("%s - %s", startDate, event.summary);
+                console.log("%s - %s", startDate, event.summary);
                 // console.log("%s - %s", endDate, event.summary);
 
                  // All day event: time zone must be set to UTC +0
@@ -44,7 +46,7 @@ function listEvents(auth, callback) {
                     // Will change the time and date, but not the time zone tag
                     var timeZone = startDate.getTimezoneOffset() / 60;
                     startDate.setUTCHours(timeZone);
-                    var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate()
+                    var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate();
                     if (eventData[dateStr] == null) {
                         eventData[dateStr] = [];
                     }
@@ -56,7 +58,7 @@ function listEvents(auth, callback) {
 
                 // Add to events data
                 else if (startDate.getDate() == endDate.getDate()) { // single day event
-                    var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate()
+                    var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate();
                     if (eventData[dateStr] == null) {
                         eventData[dateStr] = [];
                     }
@@ -68,7 +70,7 @@ function listEvents(auth, callback) {
                 // multi day event
                 } else {
                     for (j = startDate.getDate(); j <= endDate.getDate(); j++) {
-                        var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + j
+                        var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + j;
                         if (eventData[dateStr] == null) {
                             eventData[dateStr] = [];
                         }
