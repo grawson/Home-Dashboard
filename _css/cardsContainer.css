@@ -1,33 +1,35 @@
-@import url("colors.css");
-@import url("fonts.css");
+@import url("global/colors.css");
+@import url("global/fonts.css");
+@import url("global/const.css");
+
 
 body, html {
-  background-color: var(--background);
-  font-family: "Lato Regular";
-  height: 100%;
-  padding: 0;
-  margin: 0;
+    background-color: var(--background);
+    font-family: "Lato Regular";
 }
 
-.cards-container {
-  padding: 10px;
-  display: grid;
-  grid-template-columns: repeat(5, calc(20% - 6px));
-  grid-template-rows: repeat(2, calc(50% - 15px));
-  grid-gap: 10px;
+body {
+    display: flex;
 }
+
 
 #calendar-card {
-  grid-column-start: 1;
-  grid-column-end: 5;
-  grid-row-start: 1;
-  grid-row-end: 3;
+    height: calc(100% - 2*var(--margin));
+    margin: var(--margin);
+    flex: 1;  /* grow */
 }
 
+#right-container {
+    height: calc(100% - 2*var(--margin));
+    margin: var(--margin) var(--margin) var(--margin) 0;
+    flex: 0 0 300px; /* do not grow, do not shrink, start at 250px */
+}
 
 #weather-card {
-  grid-column-start: 5;
-  grid-column-end: 6;
-  grid-row-start: 1;
-  grid-row-end: 3;
+    margin-bottom: var(--margin);
+    height: calc(50% - (var(--margin)/2));
+}
+
+#holidays-card {
+    height: calc(50% - (var(--margin)/2));
 }

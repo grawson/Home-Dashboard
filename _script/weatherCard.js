@@ -9,8 +9,8 @@ String.prototype.capitalize = function() {
 
 
 function render(weatherData) {
-http://cdn.apixu.com/weather/64x64/day/113.png
-    data = {}
+// http://cdn.apixu.com/weather/64x64/day/113.png
+    data = {};
 
     data.currentWeather = weatherData.current.temp_f + "˚ " +
                           (weatherData.current.condition.text).capitalize();
@@ -30,7 +30,7 @@ http://cdn.apixu.com/weather/64x64/day/113.png
     }
 
     // Render
-    $.get('./_view/weatherCard.mst', function(template) {
+    $.get('./_view/weatherCard.mustache', function(template) {
         var rendered = Mustache.render(template, data);
         $('#weather-card').html(rendered);
     });

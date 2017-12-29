@@ -1,0 +1,23 @@
+<div class="card-header">
+    <h3 class="center-xy">{{currentWeather}}</h3>
+    <div class="card-separator center-x"></div>
+</div>
+
+
+<div class="forecast-container">
+
+    {{#forecast}}
+    <div class="forecast">
+        <div class="forecast-content-container center-xy">
+
+            <div class="forecast-icon-container">
+                <img class="forecast-icon" src="{{forecastIcon}}">
+            </div>
+            <p class="forecast-day">{{forecastDay}}</p>
+            <p class="forecast-temp">{{forecastTemp}}</p>
+        </div>
+
+    </div>
+    {{/forecast}}
+
+</div>

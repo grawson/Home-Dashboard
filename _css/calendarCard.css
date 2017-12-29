@@ -1,42 +1,51 @@
-@import url("./colors.css");
+@import url("global/colors.css");
+@import url("global/const.css");
+
+/* var **********************************************/
+
+:root {
+    --weeks-height: 30px;
+}
+
+/* general **********************************************/
+
+#calendar-content-container {
+    margin: var(--margin);
+    height: calc(100% - var(--card-header) - (2*var(--margin)));
+}
 
 .calendar-dow-container {
     color: var(--lightGray);
     display: grid;
-    grid-template-columns: 12.45% 12.45% 12.45% 12.45% 12.45% 12.45% 12.45%;
-    grid-template-rows: 50px;
-    width: 90%;
-    margin: 0 auto;
-    grid-gap: 20px;
+    grid-template-columns: repeat(7, calc(100%/7));
+    grid-template-rows: var(--weeks-height);
+    grid-gap: var(--margin);
     overflow: scroll;
-}
-
-.calendar-dow-container > div, .calendar-week-container > div {
     text-align: center;
 }
 
 .calendar-week-container {
     display: grid;
-    grid-template-columns: 12.45% 12.45% 12.45% 12.45% 12.45% 12.45% 12.45%;
+    grid-template-columns: repeat(7, calc(100%/7));
     /*height from html*/
-    grid-gap: 20px;
-    width: 90%;
-    margin: 0 auto;
+    height: auto;
+    grid-gap: var(--margin);
     overflow: hidden;
 }
 
-.today {
-    color: var(--tint1);
+.day-number {
+    text-align: center;
+    padding: 10px 0;
 }
 
-.off-month {
-    color: var(--lightGray);
+.calendar-day-container {
+    height: 100%;
 }
 
 .event-content-container {
     display: grid;
     grid-column-gap: 3px;
-    margin-bottom: 5px;
+    padding-bottom: 5px;
     grid-template-columns: 2px auto auto;
 }
 
@@ -46,21 +55,24 @@
 }
 
 .event-details {
-    font-size: 10pt;
+    text-align: left;
     white-space: nowrap;
     text-overflow: ellipsis;
     max-width: 100%;
     overflow: hidden;
-    text-align: left;
 
 }
 
 .event-time {
     font-size: 7pt;
     color: var(--lightGray);
+    text-align: right;
 
     /* baseline align */
     position: relative;
     top: 75%;
     transform: translateY(-75%);
 }
+
+.today       {  color: var(--tint1);  }
+.off-month   {  color: var(--lightGray);  }

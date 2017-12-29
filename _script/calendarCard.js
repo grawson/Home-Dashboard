@@ -8,13 +8,13 @@ const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
                 "August", "September", "October", "November", "December"];
 
 
+var calendar = google.calendar('v3');
 var today = new Date();
 // today.setMonth(today.getMonth()+1);
 
 
 function listEvents(auth, callback) {
     var eventData = {};
-    var calendar = google.calendar('v3');
 
     // Bounds of query
     var prevMonth = prevMonthDate(today);
@@ -39,71 +39,101 @@ function listEvents(auth, callback) {
         if (events.length == 0) {
             console.log('No upcoming events found.');
         } else {
-            for (var i = 0; i < events.length; i++) {
-                var event = events[i];
-                var start = event.start.dateTime || event.start.date;
-                var end = event.end.dateTime || event.end.date;
-                var startDate = new Date(start);
-                var endDate = new Date(end);
-
-                // console.log("%s - %s", startDate, event.summary);
-                // console.log("%s - %s", endDate, event.summary);
-
-                 // All day event: time zone must be set to UTC +0
-                if (start.indexOf("T") == -1) {
-                    // Will change the time and date, but not the time zone tag
-                    var timeZone = startDate.getTimezoneOffset() / 60;
-                    startDate.setUTCHours(timeZone);
-                    var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate();
-                    if (eventData[dateStr] == null) {
-                        eventData[dateStr] = [];
-                    }
-                    eventData[dateStr].push({
-                        "summary": event.summary,
-                        "start": "All Day"
-                    });
-                }
-
-                // Add to events data
-                else if (startDate.getDate() == endDate.getDate()) { // single day event
-                    var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate();
-                    if (eventData[dateStr] == null) {
-                        eventData[dateStr] = [];
-                    }
-                    eventData[dateStr].push({
-                        "summary": event.summary,
-                        "start": time(startDate)
-                    });
-
-                // multi day event
-                } else {
-                    for (j = startDate.getDate(); j <= endDate.getDate(); j++) {
-                        var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + j;
-                        if (eventData[dateStr] == null) {
-                            eventData[dateStr] = [];
-                        }
-
-                        var startLabel = "All Day";
-                        if (j == startDate.getDate()) { // fist day of multi day event
-                            startLabel = time(startDate);
-                        } else if (j == endDate.getDate()) { // last day
-                            startLabel = "12:00 AM"
-                        }
-
-                        eventData[dateStr].push({
-                            "summary": event.summary,
-                            "start": startLabel
-                        });
-                    }
-                }
-            }
+            listCalendars(auth);
+            eventData = parseEvents(events);
         }
         callback(eventData);
     });
 }
 
+function listCalendars(auth) {
+    calendar.calendarList.list({
+        auth: auth,
+        maxResults: 5
+    }, function(err, response) {
+        if (err) {
+            console.log('The API returned an error: ' + err);
+            return;
+        }
+        var calendars = response.items;
+        if (calendars.length == 0) {
+            console.log('No upcoming events found.');
+        } else {
+            for (var i = 0; i < calendars.length; i++) {
+                console.log(calendars[i]);
+            }
+        }
+    });
+}
+
+
+// Parse evnts into event data for mustache
+function parseEvents(events) {
+    var eventData = {};
+    for (var i = 0; i < events.length; i++) {
+        var event = events[i];
+        var start = event.start.dateTime || event.start.date;
+        var end = event.end.dateTime || event.end.date;
+        var startDate = new Date(start);
+        var endDate = new Date(end);
+
+        // console.log("%s - %s", startDate, event.summary);
+        // console.log("%s - %s", endDate, event.summary);
+
+         // All day event: time zone must be set to UTC +0
+        if (start.indexOf("T") == -1) {
+            // Will change the time and date, but not the time zone tag
+            var timeZone = startDate.getTimezoneOffset() / 60;
+            startDate.setUTCHours(timeZone);
+            var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate();
+            if (eventData[dateStr] == null) {
+                eventData[dateStr] = [];
+            }
+            eventData[dateStr].push({
+                "summary": event.summary,
+                "start": "All Day"
+            });
+        }
+
+        // Add to events data
+        else if (startDate.getDate() == endDate.getDate()) { // single day event
+            var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + startDate.getDate();
+            if (eventData[dateStr] == null) {
+                eventData[dateStr] = [];
+            }
+            eventData[dateStr].push({
+                "summary": event.summary,
+                "start": time(startDate)
+            });
+
+        // multi day event
+        } else {
+            for (j = startDate.getDate(); j <= endDate.getDate(); j++) {
+                var dateStr = startDate.getFullYear() + "-" + (startDate.getMonth()+1) + "-" + j;
+                if (eventData[dateStr] == null) {
+                    eventData[dateStr] = [];
+                }
+
+                var startLabel = "All Day";
+                if (j == startDate.getDate()) { // fist day of multi day event
+                    startLabel = time(startDate);
+                } else if (j == endDate.getDate()) { // last day
+                    startLabel = "12:00 AM"
+                }
+
+                eventData[dateStr].push({
+                    "summary": event.summary,
+                    "start": startLabel
+                });
+            }
+        }
+    }
+    return eventData;
+}
+
+
 function render(eventData) {
-    data = {};
+    var data = {};
 
     // Current day
     data.currentDay = DOW[today.getDay()] +
@@ -173,7 +203,7 @@ function render(eventData) {
     }
 
     // Render
-    $.get('./_view/calendarCard.mst', function(template) {
+    $.get('./_view/calendarCard.mustache', function(template) {
        var rendered = Mustache.render(template, data);
        $('#calendar-card').html(rendered);
     });

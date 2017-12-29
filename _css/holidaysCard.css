@@ -1,0 +1,19 @@
+@import url("global/colors.css");
+@import url("global/const.css");
+
+
+#holidays-container {
+    margin: var(--margin);
+    display: grid;
+    grid-template-columns: auto max-content;
+
+    grid-gap: var(--margin);
+    height: calc(100% - var(--card-header) - (var(--margin) * 2));
+    overflow: hidden;
+}
+
+.holiday-date {
+    color: var(--lightGray);
+    font-family: "Lato Thin";
+    text-align: right;
+}

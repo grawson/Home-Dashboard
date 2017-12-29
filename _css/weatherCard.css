@@ -1,26 +1,21 @@
-@import url("colors.css");
+@import url("global/colors.css");
+@import url("global/const.css");
+
 
 .forecast-container {
-    padding: 15px;
+    margin: var(--margin);
     display: grid;
-    grid-template-columns: repeat(2, 48%);
-    height: calc(100% - 90.44px);
-    grid-template-rows: repeat(4, 25vh));
-    grid-gap: 4%;
+    grid-template-columns: repeat(2, 50%);
+    height: calc(100% - var(--card-header) - (var(--margin)*2));
+    grid-template-rows: repeat(4, auto);
+    overflow: hidden;
 }
 
-.forecast-content-container {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.forecast-content-container  div {
+.forecast-content-container div, .forecast-content-container p {
     position: relative;
     text-align: center;
-    padding: 0;
-    font-size: 10pt;
 }
+
 
 .forecast-icon-container {
     height: 40px;

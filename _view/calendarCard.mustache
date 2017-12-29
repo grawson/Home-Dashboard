@@ -1,0 +1,37 @@
+
+<div class="card-header">
+    <h3 class="center-xy">{{currentDay}}</h3>
+</div>
+
+<div id="calendar-content-container">
+
+    <div class="calendar-dow-container">
+        {{#dow}}
+        <div><p>{{dowTitle}}</p></div>
+        {{/dow}}
+    </div>
+
+    {{#weeks}}
+    <div class="card-separator"></div>
+
+    <div style="height: calc({{weekHeight}}% - 3px);" class="calendar-week-container" id="week-{{weekNumber}}">
+
+        {{#days}}
+        <div>
+            <p class="day-number {{dayColor}}">{{dayNumber}}</p>
+
+            {{#events}}
+            <div class="event-content-container">
+              <div class="event-tag"></div>
+              <p class="event-details">{{eventTitle}}</p>
+              <div><p class="event-time">{{eventTime}}</p></div>
+            </div>
+            {{/events}}
+
+        </div>
+        {{/days}}
+
+    </div>
+    {{/weeks}}
+
+</div>
