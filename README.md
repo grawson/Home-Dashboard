@@ -1,21 +1,24 @@
 # Home-Dashboard
 A dashboard for your every day needs! Deploy on a Raspberry Pi and hook up to a display in your home!
-The project is in the works, but the features will include:
+Features include:
 
 1. Calendar view using Google Calendar API
-2. Detailed view of today's events
-3. Weather forecast
+2. Weather forecast
+3. Upcoming Jewish holidays
 
-All features are separate modules on the dashboard, which will allow room for more features to come!
+All features are separate modules on the dashboard, which will allow room for more features to come! Check out
+the screenshot for a quick view.
 
 # To Run
-The project is built using Electron. Begin by adding a client_secret.json file for Google Calendar authentication.
+1. The project is built using Electron. Begin by adding a client_secret.json to the project root for Google Calendar authentication.
 
-To authenticate, run command ```./auth.sh``` and follow on-screen instructions.
+2. To authenticate, run command ```npm run auth``` and follow on-screen instructions.
 
-Once authenticated, run
-```
-npm install && npm start
-```
+3. Once authenticated, run ```npm install && npm start```
 
-Enjoy!
+4. Enjoy!
+
+# Next Steps
+
+The next step is to fix some good old bugs in the calendar card. I plan on rewriting the JS using datejs for 
+more robust date management. 
