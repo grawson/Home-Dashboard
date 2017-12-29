@@ -22,14 +22,14 @@ body {
 #right-container {
     height: calc(100% - 2*var(--margin));
     margin: var(--margin) var(--margin) var(--margin) 0;
-    flex: 0 0 300px; /* do not grow, do not shrink, start at 250px */
+    flex: 0 0 270px; /* do not grow, do not shrink, start at 250px */
 }
 
 #weather-card {
     margin-bottom: var(--margin);
-    height: calc(50% - (var(--margin)/2));
+    height: calc(50% - var(--margin));
 }
 
 #holidays-card {
-    height: calc(50% - (var(--margin)/2));
+    height: 50%;
 }

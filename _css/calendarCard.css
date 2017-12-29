@@ -17,25 +17,27 @@
 .calendar-dow-container {
     color: var(--lightGray);
     display: grid;
-    grid-template-columns: repeat(7, calc(100%/7));
+    grid-template-columns: repeat(7, calc( 100%/7 ));
     grid-template-rows: var(--weeks-height);
-    grid-gap: var(--margin);
-    overflow: scroll;
+    /*grid-gap: var(--margin);*/
+    /*overflow: scroll;*/
     text-align: center;
+
 }
 
 .calendar-week-container {
     display: grid;
-    grid-template-columns: repeat(7, calc(100%/7));
+    grid-template-columns: repeat(7, calc( 100%/7 ));
     /*height from html*/
     height: auto;
-    grid-gap: var(--margin);
-    overflow: hidden;
+    /*grid-gap: var(--margin);*/
+    /*overflow: hidden;*/
 }
 
 .day-number {
     text-align: center;
-    padding: 10px 0;
+    padding-bottom: 10px;
+    font-family: "Lato Thin";
 }
 
 .calendar-day-container {
@@ -47,6 +49,13 @@
     grid-column-gap: 3px;
     padding-bottom: 5px;
     grid-template-columns: 2px auto auto;
+}
+
+.calendar-week-container > div {
+    border: #f1f9f6 solid 1px;
+    margin: -1px 0 0 -1px;
+    padding: 5px;
+    overflow: hidden;
 }
 
 .event-tag {
@@ -67,6 +76,7 @@
     font-size: 7pt;
     color: var(--lightGray);
     text-align: right;
+    font-family: "Lato Thin";
 
     /* baseline align */
     position: relative;

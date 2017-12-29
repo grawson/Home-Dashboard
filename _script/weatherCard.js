@@ -1,6 +1,7 @@
 const Mustache = require("mustache");
 
 const DOW = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const REFRESH_RATE = 21600;  // seconds
 
 
 String.prototype.capitalize = function() {
@@ -49,9 +50,10 @@ function loadWeather(callback) {
 
 $(document).ready(function() {
 
-    loadWeather(function(weatherData) {
-        render(weatherData);
-    });
-
+    loadWeather(render);
+    window.setInterval(function() {
+        console.log("Reloading weather data...");
+        loadWeather(render);
+    }, REFRESH_RATE*1000);
 
 });
