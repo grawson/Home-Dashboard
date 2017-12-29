@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "auth": "./_script/auth/auth.sh"
+    "auth": "./_script/auth/auth.sh",
+    "pi": "export DISPLAY=:0 && npm start"
   },
   "author": "Rawson Inc",
   "devDependencies": {},
