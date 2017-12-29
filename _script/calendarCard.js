@@ -2,7 +2,7 @@ const Mustache = require("mustache");
 const calendarAuth = require('./auth/CalendarAuth');
 const google = require('googleapis');
 
-
+const REFRESH_RATE = 600;  // seconds
 const DOW = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
                 "August", "September", "October", "November", "December"];
@@ -266,15 +266,21 @@ function nextMonthDate(currDate) {
     return next;
 }
 
-
-$(document).ready(function() {
-
+function load() {
     calendarAuth.authorize(function(auth) {
-
         listEvents(auth, function(eventData) {
             render(eventData);
         });
-
     });
+}
+
+
+$(document).ready(function() {
+
+    load();
+    window.setInterval(function() {
+        console.log("Reloading calendar data...");
+        load();
+    }, REFRESH_RATE*1000);
 
 });
