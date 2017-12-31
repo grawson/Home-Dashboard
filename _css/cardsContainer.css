@@ -5,7 +5,8 @@
 
 body, html {
     background-color: var(--background);
-    font-family: "Lato Regular";
+    font-family: "Lato Medium";
+    cursor: none;
 }
 
 body {

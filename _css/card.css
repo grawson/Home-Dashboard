@@ -12,7 +12,7 @@
     margin: 0 var(--margin) 0 var(--margin);
     text-align: center;
     font-size: 1.4em;
-    font-family: "Lato Thin";
+    font-family: "Lato Regular";
     color: var(--tint1);
     height: var(--card-header);
     position: relative;

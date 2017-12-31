@@ -1,14 +1,19 @@
 @font-face {
-  font-family: "Lato Light";
-  src: url("../../_assets/fonts/Lato-Light.ttf");
+    font-family: "Lato Light";
+    src: url("../../_assets/fonts/Lato-Light.ttf");
 }
 
 @font-face {
-  font-family: "Lato Regular";
-  src: url("../../_assets/fonts/Lato-Regular.ttf");
+    font-family: "Lato Regular";
+    src: url("../../_assets/fonts/Lato-Regular.ttf");
 }
 
 @font-face {
-  font-family: "Lato Thin";
-  src: url("../../_assets/fonts/Lato-Thin.ttf");
+    font-family: "Lato Thin";
+    src: url("../../_assets/fonts/Lato-Thin.ttf");
+}
+
+@font-face {
+    font-family: "Lato Medium";
+    src: url("../../_assets/fonts/Lato-Medium.ttf");
 }

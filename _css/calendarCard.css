@@ -37,7 +37,7 @@
 .day-number {
     text-align: center;
     padding-bottom: 10px;
-    font-family: "Lato Thin";
+    font-family: "Lato Regular";
 }
 
 .calendar-day-container {
@@ -52,7 +52,7 @@
 }
 
 .calendar-week-container > div {
-    border: #f1f9f6 solid 1px;
+    border: var(--separator) solid 1px;
     margin: -1px 0 0 -1px;
     padding: 5px;
     overflow: hidden;
@@ -69,14 +69,14 @@
     text-overflow: ellipsis;
     max-width: 100%;
     overflow: hidden;
-
+    font-family: "Lato Medium";
 }
 
 .event-time {
-    font-size: 7pt;
+    font-size: 0.9em;
     color: var(--lightGray);
     text-align: right;
-    font-family: "Lato Thin";
+    font-family: "Lato Regular";
 
     /* baseline align */
     position: relative;
