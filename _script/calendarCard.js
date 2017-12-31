@@ -18,9 +18,9 @@ function listEvents(auth, callback) {
     var eventData = {};
 
     // Bounds of query
-    var prevMonth = prevMonthDate(today);
+    var prevMonth = Date.today().add(-1).months();
     prevMonth.setDate(20);
-    var nextMonth = nextMonthDate(today);
+    var nextMonth =  Date.today().add(+1).months();
     nextMonth.setDate(8);
 
     calendar.events.list({
@@ -176,7 +176,7 @@ function render(eventData) {
                     "dayColor": currDay === today.getDate() ? "today" : ""
                 });
 
-                dateOfEvent = new Date(today.valueOf());
+                var dateOfEvent = new Date(today.valueOf());
                 dateOfEvent.setDate(currDay);
                 initEvents(dateOfEvent, data.weeks[i-1].days[j], eventData);
                 currDay++;
@@ -196,7 +196,7 @@ function render(eventData) {
                     "dayColor": "off-month"
                 });
 
-                dateOfEvent = (j < firstDOM && i <= 1) ? prevMonthDate(today) : nextMonthDate(today);
+                dateOfEvent = (j < firstDOM && i <= 1) ?  Date.today().add(-1).months() : Date.today().add(+1).months();
                 dateOfEvent.setDate(currDayLabel);
                 initEvents(dateOfEvent, data.weeks[i-1].days[j], eventData);
             }
