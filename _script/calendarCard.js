@@ -1,6 +1,7 @@
 const Mustache = require("mustache");
 const calendarAuth = require('./auth/CalendarAuth');
 const google = require('googleapis');
+require('datejs');
 
 const REFRESH_RATE = 600;  // seconds
 const DOW = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -39,7 +40,7 @@ function listEvents(auth, callback) {
         if (events.length == 0) {
             console.log('No upcoming events found.');
         } else {
-            listCalendars(auth);
+            // listCalendars(auth);
             eventData = parseEvents(events);
         }
         callback(eventData);
@@ -67,7 +68,7 @@ function listCalendars(auth) {
 }
 
 
-// Parse evnts into event data for mustache
+// Parse events into event data for mustache
 function parseEvents(events) {
     var eventData = {};
     for (var i = 0; i < events.length; i++) {
@@ -103,7 +104,7 @@ function parseEvents(events) {
             }
             eventData[dateStr].push({
                 "summary": event.summary,
-                "start": time(startDate)
+                "start": startDate.toString("h:mmtt")
             });
 
         // multi day event
@@ -116,7 +117,7 @@ function parseEvents(events) {
 
                 var startLabel = "All Day";
                 if (j == startDate.getDate()) { // fist day of multi day event
-                    startLabel = time(startDate);
+                    startLabel = startDate.toString("h:mmtt");
                 } else if (j == endDate.getDate()) { // last day
                     startLabel = "12:00 AM"
                 }
@@ -231,15 +232,6 @@ function ordinalSuffixOf(i) {
     if (j == 2 && k != 12) { return i + "nd"; }
     if (j == 3 && k != 13) { return i + "rd"; }
     return i + "th";
-}
-
-
-function time(date) {
-    var hrs = date.getHours() % 12;
-    var meridiem = date.getHours() >= 12 ? "PM" : "AM";
-    var min = date.getMinutes();
-    if (min < 10) { min = "0" + min; }
-    return hrs + ":" + min + " " + meridiem;
 }
 
 // set month and year of prev month. day needs to be set depending on use case.

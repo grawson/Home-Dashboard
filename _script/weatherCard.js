@@ -42,7 +42,6 @@ function loadWeather(callback) {
     var url = "https://api.apixu.com/v1/forecast.json?key="+key+"&q=10804&days=8";
     $.getJSON(url, function(json){
         callback(json);
-        console.log(json);
     });
 }
 
