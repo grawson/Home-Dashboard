@@ -1,5 +1,5 @@
 var x = require('./CalendarAuth.js');
 
-x.authorize(function(auth) {
+x.getNewToken(function(auth) {
     console.log("Stored token!");
 });
