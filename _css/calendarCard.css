@@ -35,7 +35,7 @@
 }
 
 .day-number {
-    text-align: center;
+    /*text-align: center;*/
     padding-bottom: 10px;
     font-family: "Lato Regular";
 }
@@ -84,5 +84,9 @@
     transform: translateY(-75%);
 }
 
-.today       {  color: var(--tint1);  }
+.today {  
+    color: var(--tint1); 
+    font-family: "Lato Medium";
+}
+
 .off-month   {  color: var(--lightGray);  }
