@@ -1,4 +1,5 @@
 node_modules/*
+package-lock.json
 *.DS_Store
 *access_token.json
 _script/auth/client_secret.json
