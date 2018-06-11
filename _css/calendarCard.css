@@ -40,10 +40,6 @@
     font-family: "Lato Regular";
 }
 
-.calendar-day-container {
-    height: 100%;
-}
-
 .event-content-container {
     display: grid;
     grid-column-gap: 3px;
@@ -51,7 +47,7 @@
     grid-template-columns: 2px auto auto;
 }
 
-.calendar-week-container > div {
+.calendar-day-container {
     border: var(--separator) solid 1px;
     margin: -1px 0 0 -1px;
     padding: 5px;
@@ -87,6 +83,12 @@
 .today {  
     color: var(--tint1); 
     font-family: "Lato Medium";
+}
+
+.todayBackground {
+    /*border: 1px solid var(--tint1);*/
+    /*z-index: 1000;*/
+    background-color: #f7faff;
 }
 
 .off-month   {  color: var(--lightGray);  }

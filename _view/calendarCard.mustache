@@ -17,7 +17,7 @@
     <div style="height: calc({{weekHeight}}% - 3px);" class="calendar-week-container" id="week-{{weekNumber}}">
 
         {{#days}}
-        <div>
+        <div class="calendar-day-container {{dayBackground}}">
             <p class="day-number {{dayColor}}">{{dayNumber}}</p>
 
             {{#events}}

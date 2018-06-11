@@ -148,7 +148,7 @@ function render(eventData) {
     }
 
     // Calculate start and end of the month
-    var firstDOM = new Date(today.getYear(), today.getMonth()+1, 1).getDay()-1;
+    var firstDOM = new Date(today.getYear(), today.getMonth()+1, 1).getDay();
     var numDaysInMonth = new Date(today.getYear(), today.getMonth()+1, 0).getDate();
     var prevMonth = prevMonthDate(today);
     var numDaysInPrevMonth = new Date(prevMonth.getYear(), prevMonth.getMonth()+1, 0).getDate()+1;
@@ -169,11 +169,13 @@ function render(eventData) {
         for (var j = 0; j < 7; j++) {
 
             // Make sure day number is in the current month
+            var isToday = currDay === today.getDate();
             if (currDay <= numDaysInMonth && (j >= firstDOM || i > 1)) {
                 currDayOffMonth = 1;
                 data.weeks[i-1].days.push({
                     "dayNumber": currDay,
-                    "dayColor": currDay === today.getDate() ? "today" : ""
+                    "dayColor": isToday ? "today" : "",
+                    "dayBackground": isToday ? "todayBackground" : ""
                 });
 
                 var dateOfEvent = new Date(today.valueOf());
@@ -183,7 +185,6 @@ function render(eventData) {
 
             // Else either before or after this month
             } else {
-
                 var currDayLabel = (j < firstDOM && i <= 1) ? numDaysInPrevMonth - prevMonthDayOffset : currDayOffMonth;
                 if (j < firstDOM && i <= 1) {
                     prevMonthDayOffset -= 1;
