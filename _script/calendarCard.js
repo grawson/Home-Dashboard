@@ -10,7 +10,6 @@ const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
 
 
 var calendar = google.calendar('v3');
-var today = new Date();
 // today.setMonth(today.getMonth()+1);
 
 
@@ -137,9 +136,9 @@ function render(eventData) {
     var data = {};
 
     // Current day
-    data.currentDay = DOW[today.getDay()] +
-                        ", " + MONTHS[today.getMonth()] +
-                         " " + ordinalSuffixOf(today.getDate());
+    data.currentDay = DOW[Date.today().getDay()] +
+                        ", " + MONTHS[Date.today().getMonth()] +
+                         " " + ordinalSuffixOf(Date.today().getDate());
 
     // Days of week
     data.dow = [];
@@ -148,10 +147,10 @@ function render(eventData) {
     }
 
     // Calculate start and end of the month
-    var firstDOM = new Date(today.getYear(), today.getMonth()+1, 1).getDay();
-    var numDaysInMonth = new Date(today.getYear(), today.getMonth()+1, 0).getDate();
-    var prevMonth = prevMonthDate(today);
-    var numDaysInPrevMonth = new Date(prevMonth.getYear(), prevMonth.getMonth()+1, 0).getDate()+1;
+    var firstDOM = Date.today().clearTime().moveToFirstDayOfMonth().getDay();
+    var numDaysInMonth = Date.getDaysInMonth(Date.today().getYear(), Date.today().getMonth());
+    var prevMonth = (-1).months().fromNow();
+    var numDaysInPrevMonth = Date.getDaysInMonth(prevMonth.getYear(), prevMonth.getMonth());
 
     var currDay = 1;
     var currDayOffMonth = 1;
@@ -169,7 +168,8 @@ function render(eventData) {
         for (var j = 0; j < 7; j++) {
 
             // Make sure day number is in the current month
-            var isToday = currDay === today.getDate();
+            var isToday = currDay === Date.today().getDate();
+
             if (currDay <= numDaysInMonth && (j >= firstDOM || i > 1)) {
                 currDayOffMonth = 1;
                 data.weeks[i-1].days.push({
@@ -178,7 +178,7 @@ function render(eventData) {
                     "dayBackground": isToday ? "todayBackground" : ""
                 });
 
-                var dateOfEvent = new Date(today.valueOf());
+                var dateOfEvent = new Date(Date.today().valueOf());
                 dateOfEvent.setDate(currDay);
                 initEvents(dateOfEvent, data.weeks[i-1].days[j], eventData);
                 currDay++;

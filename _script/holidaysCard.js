@@ -26,8 +26,6 @@ function loadData(callback) {
                 "date": itemDate.toString("M/d")
             };
 
-            console.log(holiday);
-
             data.holidays.push(holiday);
         }
         callback(data);
