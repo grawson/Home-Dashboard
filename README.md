@@ -1,5 +1,8 @@
 # Home-Dashboard
 A dashboard for your every day needs! Deploy on a Raspberry Pi and hook up to a display in your home!
+
+Check out the [screenshot](https://github.com/grawson/Home-Dashboard/blob/master/screenshot.png) for a view of the UI.
+
 Features include:
 
 1. Calendar view using Google Calendar API
