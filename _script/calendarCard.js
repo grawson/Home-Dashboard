@@ -154,7 +154,7 @@ function render(eventData) {
 
     var currDay = 1;
     var currDayOffMonth = 1;
-    var prevMonthDayOffset = firstDOM;
+    var prevMonthDayOffset = firstDOM-1;
 
     data.weeks = [];
     var numRows = Math.ceil((numDaysInMonth+firstDOM)/7.0);
