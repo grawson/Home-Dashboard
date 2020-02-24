@@ -4,7 +4,7 @@ const Mustache = require("mustache");
  
  $(document).ready(() => {
     window.setInterval(function() {
-        console.log("Reloading calendar data...");
+        console.log("Reloading time...");
         render();
     }, 1000);
  })   
