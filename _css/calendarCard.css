@@ -92,8 +92,3 @@
 }
 
 .off-month   {  color: var(--lightGray);  }
-
-#calendar-container {
-    display: flex;
-    flex-direction: column;
-}
