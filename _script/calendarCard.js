@@ -136,7 +136,7 @@ function render(eventData) {
     var data = {};
 
     // Current day
-    data.currentDay = `${DOW[Date.today().getDay()]}, ${MONTHS[Date.today().getMonth()]} ${ordinalSuffixOf(Date.today().getDate())}, ${(new Date).getHours() % 12 ? (new Date).getHours() % 12 : 12}: ${(new Date).getMinutes()}${(new Date).getHours() > 12 ? 'pm' : 'am'}`;
+    data.currentDay = `${DOW[Date.today().getDay()]}, ${MONTHS[Date.today().getMonth()]} ${ordinalSuffixOf(Date.today().getDate())}, ${(new Date).getHours() % 12 ? (new Date).getHours() % 12 : 12}:${(new Date).getMinutes()}${(new Date).getHours() > 12 ? 'pm' : 'am'}`;
 
     // Days of week
     data.dow = [];
@@ -225,7 +225,13 @@ function initEvents(dateOfEvent, data, eventData) {
 }
 
 
-
+function ordinalSuffixOf(i) {
+    var j = i % 10, k = i % 100;
+    if (j == 1 && k != 11) { return i + "st"; }
+    if (j == 2 && k != 12) { return i + "nd"; }
+    if (j == 3 && k != 13) { return i + "rd"; }
+    return i + "th";
+}
 
 // set month and year of prev month. day needs to be set depending on use case.
 function prevMonthDate(currDate) {
