@@ -135,6 +135,11 @@ function parseEvents(events) {
 function render(eventData) {
     var data = {};
 
+<<<<<<< HEAD
+=======
+    // Current day
+    data.currentDay = `${DOW[Date.today().getDay()]}, ${MONTHS[Date.today().getMonth()]} ${ordinalSuffixOf(Date.today().getDate())}, ${(new Date).getHours() % 12 ? (new Date).getHours() % 12 : 12}: ${(new Date).getMinutes()}${(new Date).getHours() > 12 ? 'pm' : 'am'}`;
+>>>>>>> parent of fe075af... time spacing fix
 
     // Days of week
     data.dow = [];
