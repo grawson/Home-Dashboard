@@ -34,9 +34,8 @@
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
     "datejs": "^1.0.0-rc3",
-    "electron-builder-squirrel-windows": "^20.28.3",
     "googleapis": "^21.3.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.2.1",
     "mustache": "^2.3.0",
     "openweathermap-js": "^1.0.1",
     "time": "^0.12.0"

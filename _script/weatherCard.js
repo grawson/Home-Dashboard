@@ -1,32 +1,44 @@
 const Mustache = require("mustache");
+const Keys = require("./keys");
 
 const DOW = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const REFRESH_RATE = 21600;  // seconds
-
+const REFRESH_RATE = 2000;  // seconds
 
 String.prototype.capitalize = function() {
     return this.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
 };
+//
+// const ICON_MAPPING = {
+//     "clear-day": "clear-day"
+//     "clear-night": "clear-night"
+//     "rain": "",
+//     "snow": "",
+//     "wind": "",
+//     "fog": "",
+//     "cloudy": "",
+//     "partly-cloudy-day": "",
+//     "partly-cloudy-night": ""
+// };
 
 
 function render(weatherData) {
-// http://cdn.apixu.com/weather/64x64/day/113.png
+
     data = {};
 
-    data.currentWeather = weatherData.current.temp_f + "˚ " +
-                          (weatherData.current.condition.text).capitalize();
+    data.currentWeather = Math.round(weatherData.currently.temperature) + "˚ "
+                            + weatherData.currently.summary;
 
     data.forecast = [];
     var today = (new Date()).getDay();
-    for (var i = 0; i < weatherData.forecast.forecastday.length; i++) {
+    for (var i = 0; i < weatherData.daily.data.length; i++) {
 
-        var icon = "http://" + weatherData.forecast.forecastday[i].day.condition.icon;
+        var icon = weatherData.daily.data[i].icon;
 
         data.forecast.push({
             "forecastDay": DOW[(today+i)%7],
-            "forecastTemp": weatherData.forecast.forecastday[i].day.maxtemp_f + " / "
-                            + weatherData.forecast.forecastday[i].day.mintemp_f,
-            "forecastIcon": icon
+            "forecastTemp": Math.round(weatherData.daily.data[i].temperatureMax) + " / " +
+                            Math.round(weatherData.daily.data[i].temperatureMin),
+            "forecastIcon": "_assets/imgs/" + icon + "@2x.png"
         });
     }
 
@@ -38,12 +50,12 @@ function render(weatherData) {
 }
 
 function loadWeather(callback) {
-    var key = "623028cc072c4e76a8b210502172309";
-    var url = "https://api.apixu.com/v1/forecast.json?key="+key+"&q=10804&days=8";
+    var url = "https://api.darksky.net/forecast/" + Keys.weatherKey() + "/40.9115,-73.7824?exclude=minutely,hourly,alerts,flags";
     $.getJSON(url, function(json){
         callback(json);
     });
 }
+
 
 
 
@@ -56,3 +68,8 @@ $(document).ready(function() {
     }, REFRESH_RATE*1000);
 
 });
+
+
+
+
+

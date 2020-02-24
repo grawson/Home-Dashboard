@@ -29,8 +29,10 @@
     bottom: 0;
     left: 0;
     margin: auto;
-    max-width: 80%;
-    max-height: 90%
+    /*width: 40px;*/
+    /*height: 40px;*/
+    max-width: 65%;
+    max-height: 75%
 }
 
 .forecast-day {
