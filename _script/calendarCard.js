@@ -3,7 +3,7 @@ const calendarAuth = require('./auth/CalendarAuth');
 const google = require('googleapis');
 require('datejs');
 
-const REFRESH_RATE = 60;  // seconds
+const REFRESH_RATE = 600;  // seconds
 const DOW = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
                 "August", "September", "October", "November", "December"];
@@ -135,8 +135,6 @@ function parseEvents(events) {
 function render(eventData) {
     var data = {};
 
-    // Current day
-    data.currentDay = `${DOW[Date.today().getDay()]}, ${MONTHS[Date.today().getMonth()]} ${ordinalSuffixOf(Date.today().getDate())}, ${(new Date).getHours() % 12 ? (new Date).getHours() % 12 : 12}:${(new Date).getMinutes()}${(new Date).getHours() > 12 ? 'pm' : 'am'}`;
 
     // Days of week
     data.dow = [];
