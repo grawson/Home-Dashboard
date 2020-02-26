@@ -11,6 +11,12 @@
 .flex-row {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    text-align: center;
+}
+
+#currTime {
+    margin: 0;
 }
 
 #calendar-content-container {
