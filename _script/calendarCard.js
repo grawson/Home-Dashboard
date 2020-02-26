@@ -136,8 +136,8 @@ function render(eventData) {
     var data = {};
 
     // Current day
-    data.currentDay = `${DOW[Date.today().getDay()]}, ${MONTHS[Date.today().getMonth()]} ${ordinalSuffixOf(Date.today().getDate())}, ${(new Date).getHours() % 12 ? (new Date).getHours() % 12 : 12}:${(new Date).getMinutes() < 10 ? '0'+(new Date).getMinutes() : (new Date).getMinutes()}${(new Date).getHours() > 12 ? 'pm' : 'am'}`;
-
+    data.currentDay = `${DOW[Date.today().getDay()]}, ${MONTHS[Date.today().getMonth()]} ${ordinalSuffixOf(Date.today().getDate())}, `;
+    data.currentTime = `${(new Date).getHours() % 12 ? (new Date).getHours() % 12 : 12}:${(new Date).getMinutes() < 10 ? '0'+(new Date).getMinutes() : (new Date).getMinutes()}${(new Date).getHours() > 12 ? 'pm' : 'am'}`
     // Days of week
     data.dow = [];
     for (var i = 0; i < 7; i++) {
@@ -265,6 +265,11 @@ function load() {
     });
 }
 
+function update_time() {
+    var time = `${(new Date).getHours() % 12 ? (new Date).getHours() % 12 : 12}:${(new Date).getMinutes() < 10 ? '0'+(new Date).getMinutes() : (new Date).getMinutes()}${(new Date).getHours() > 12 ? 'pm' : 'am'}`
+    $('#currTime').text(time)
+}
+
 
 $(document).ready(function() {
 
@@ -273,5 +278,10 @@ $(document).ready(function() {
         console.log("Reloading calendar data...");
         load();
     }, REFRESH_RATE*1000);
+
+    window.setInterval(() => {
+        console.log('Updating time')
+        update_time()
+    }, 1000)
 
 });
