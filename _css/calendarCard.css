@@ -15,9 +15,9 @@
     text-align: center;
 }
 
-#currTime {
+/* #currTime {
     margin: 0;
-}
+} */
 
 #calendar-content-container {
     margin: var(--margin);
