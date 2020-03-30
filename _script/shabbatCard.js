@@ -2,6 +2,8 @@ const Mustache = require("mustache");
 require('datejs');
 const Cheerio = require('cheerio')
 const Axios = require('axios')
+const REFRESH_RATE = 60000;  // seconds
+
 
 const TEMPLATE = './_view/shabbatCard.mustache';
 
@@ -75,7 +77,7 @@ async function scrapeData(callback) {
 }
 
 function render(data) {
-    $.get(TEMPLATE, function(template) {
+    $.get(TEMPLATE, template => {
         var rendered = Mustache.render(template, data);
         $('#holidays-card').html(rendered);
     });
@@ -83,4 +85,8 @@ function render(data) {
 
 $(function () {
     scrapeData(render);
+    window.setInterval(function() {
+        console.log("Reloading calendar data...");
+        scrapeData(render);
+    }, REFRESH_RATE*1000);
 });
