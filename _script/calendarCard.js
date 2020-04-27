@@ -22,28 +22,28 @@ function listEvents(auth, callback) {
     var nextMonth =  Date.today().add(+1).months();
     nextMonth.setDate(8);
 
-    // calendar.events.list({
-    //     auth: auth,
-    //     calendarId: 'primary',
-    //     timeMin: prevMonth.toISOString(),
-    //     timeMax: nextMonth.toISOString(),
-    //     maxResults: 500,
-    //     singleEvents: true,
-    //     orderBy: 'startTime'
-    // }, function(err, response) {
-    //     if (err) {
-    //         console.log('The API returned an error: ' + err);
-    //         return;
-    //     }
-    //     var events = response.items;
-    //     if (events.length == 0) {
-    //         console.log('No upcoming events found.');
-    //     } else {
-    //         // listCalendars(auth);
-    //         eventData = parseEvents(events);
-    //     }
+    calendar.events.list({
+        auth: auth,
+        calendarId: 'primary',
+        timeMin: prevMonth.toISOString(),
+        timeMax: nextMonth.toISOString(),
+        maxResults: 500,
+        singleEvents: true,
+        orderBy: 'startTime'
+    }, function(err, response) {
+        if (err) {
+            console.log('The API returned an error: ' + err);
+            return;
+        }
+        var events = response.items;
+        if (events.length == 0) {
+            console.log('No upcoming events found.');
+        } else {
+            // listCalendars(auth);
+            eventData = parseEvents(events);
+        }
         callback(eventData);
-    // });
+    });
 }
 
 function listCalendars(auth) {
@@ -258,12 +258,11 @@ function nextMonthDate(currDate) {
 }
 
 function load() {
-    // calendarAuth.authorize(function(auth) {
-        // listEvents(auth, function(eventData) {
-        listEvents(null, function(eventData) {
+    calendarAuth.authorize(function(auth) {
+        listEvents(auth, function(eventData) {
             render(eventData);
         });
-    // });
+    });
 }
 
 function update_time() {

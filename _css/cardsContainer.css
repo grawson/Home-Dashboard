@@ -23,6 +23,7 @@ body {
 #right-container {
     height: calc(100% - 2*var(--margin));
     margin: var(--margin) var(--margin) var(--margin) 0;
+    display: flex;
     flex-direction: column;
     flex: 0 0 270px; /* do not grow, do not shrink, start at 250px */
 }
@@ -30,8 +31,10 @@ body {
 #weather-card {
     margin-bottom: var(--margin);
     /* height: calc(50% - var(--margin)); */
+    
 }
 
 #holidays-card {
+    margin-bottom: var(--margin);
     /* height: 50%; */
 }
