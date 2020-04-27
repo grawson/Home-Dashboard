@@ -79,7 +79,7 @@ async function scrapeData(callback) {
 function render(data) {
     $.get(TEMPLATE, template => {
         var rendered = Mustache.render(template, data);
-        $('#holidays-card').html(rendered);
+        $('#shabbat-card').html(rendered);
     });
 }
 

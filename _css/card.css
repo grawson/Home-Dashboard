@@ -29,3 +29,9 @@
     width: 100%;
     margin: 0 auto;
 }
+
+.card-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
