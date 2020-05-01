@@ -16,6 +16,10 @@
     text-align: center;
 }
 
+.forecast {
+    margin-bottom: 25px;
+}
+
 
 .forecast-icon-container {
     height: 40px;

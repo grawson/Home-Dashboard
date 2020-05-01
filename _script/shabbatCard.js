@@ -20,7 +20,9 @@ async function scrapeData(callback) {
     var nodes = html('.two-fifth')[0].children[1].firstChild.firstChild
 
     // this weeks parsha
-    data.parsha = html(html(nodes).find(':contains("Shabbat")')[1]).text()
+    var parshaData = await $.get('https://www.hebcal.com/shabbat/?cfg=json&zip=10804&m=0')
+    
+    data.parsha = parshaData.items.find(e => e.category == 'parashat').title
 
 
     // candle lighting
