@@ -36,5 +36,6 @@ body {
 
 #holidays-card {
     margin-bottom: var(--margin);
+    overflow: hidden;
     /* height: 50%; */
 }
