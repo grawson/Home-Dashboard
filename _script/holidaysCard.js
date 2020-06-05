@@ -52,6 +52,6 @@ $(function () {
     loadData(render);
     window.setInterval(function() {
         console.log("Reloading holiday data...");
-        scrapeData(render);
+        loadData(render);
     }, REFRESH_RATE*1000);
 });
