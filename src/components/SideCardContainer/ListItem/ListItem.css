@@ -1,0 +1,9 @@
+.listDetails {
+    margin-left: auto;
+    color: var(--lightGray);
+    font-family: "Lato Regular";
+}
+
+#items-container .flexRow + .flexRow {
+    margin-top: 15px;
+}

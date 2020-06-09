@@ -1,0 +1,8 @@
+.forecast-container {
+    margin: var(--margin);
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    height: calc(100% - var(--card-header) - (var(--margin)*2));
+    grid-template-rows: repeat(4, auto);
+    overflow: hidden;
+}

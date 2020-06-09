@@ -1,0 +1,114 @@
+:root {
+    --background: #1e1d29;
+    --separator: #E9E9E9;
+    --tint1: #FF8479;
+    --lightGray: #686868;
+    --card-header: 50px;
+    --margin: 20px;
+}
+
+html, body {
+    height: 100%;
+    background-color: var(--background);
+    font-family: "Lato Medium";
+    overflow: hidden;
+    margin: 0;
+    /* cursor: none; */
+}
+
+body {
+    font-size: 80%;
+}
+
+p {
+    font-size: 1em;
+}
+
+.center-xy {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+
+.center-x {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%); }
+
+.center-y {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); }
+
+
+
+.flexRow {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
+.flexCol {
+    display: flex;
+    flex-direction: column;
+}
+
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    flex: 1;
+}
+
+.card + .card {
+    margin-top: 15px;
+}
+
+@font-face {
+    font-family: "Lato Light";
+    src: url("./fonts/Lato-Light.ttf");
+}
+
+@font-face {
+    font-family: "Lato Regular";
+    src: url("./fonts/Lato-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Lato Thin";
+    src: url("./fonts/Lato-Thin.ttf");
+}
+
+@font-face {
+    font-family: "Lato Medium";
+    src: url("./fonts/Lato-Medium.ttf");
+}
+
+@font-face {
+    font-family: "Lato Black";
+    src: url("./fonts/Lato-Black.ttf");
+}
+
+@font-face {
+    font-family: "Lato Italic";
+    src: url("./fonts/Lato-Italic.ttf");
+}
+
+@font-face {
+    font-family: "Lato Semibold Italic";
+    src: url("./fonts/Lato-SemiboldItalic.ttf");
+}
+
+
+@font-face {
+    font-family: "Lato Semibold";
+    src: url("./fonts/Lato-Semibold.ttf");
+}
+
+
+
+
+
+
+
+
