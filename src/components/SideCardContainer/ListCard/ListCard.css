@@ -2,5 +2,5 @@
     margin: var(--margin);
     height: calc(100% - var(--card-header) - (var(--margin) * 2));
     overflow: hidden;
-    padding-bottom: 15px;
+    /* padding-bottom: 15px; */
 }

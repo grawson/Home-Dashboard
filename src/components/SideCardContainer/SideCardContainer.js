@@ -1,7 +1,7 @@
 import React from 'react'
 import { ListCard } from './ListCard/ListCard'
-// import { ShabbatCard } from './ShabbatCard/ShabbatCard'
 import { WeatherCard } from './WeatherCard/WeatherCard'
+import Keys from '../../keys/keys'
 import Cheerio from 'cheerio'
 
 export class SideCardContainer extends React.Component {
@@ -19,12 +19,26 @@ export class SideCardContainer extends React.Component {
                 isLoaded: false,
                 error: null,
                 title: 'Shabbat'
+            },
+            weather: {
+                currWeather: {
+                    temp: '',
+                    icon: null,
+                    isLoaded: false,
+                    error: null
+                },
+                forecast: {
+                    days: [],
+                    isLoaded: false,
+                    error: null
+                }
             }
         }
 
         this.updateHolidays = this.updateHolidays.bind(this)
         this.updateShabbatTimes = this.updateShabbatTimes.bind(this)
         this.updateCurrWeather = this.updateCurrWeather.bind(this)
+        this.updateForecast = this.updateForecast.bind(this)
     }
 
     updateHolidays() {
@@ -93,8 +107,9 @@ export class SideCardContainer extends React.Component {
         //times
         fetch('http://allow-any-origin.appspot.com/https://www.yinr.org/').then(response => response.text()).then(data => {
             let $ = Cheerio.load(data)
+            
             let nodes = $('.two-fifth')[0].children[1].firstChild.firstChild
-        
+
             // candle lighting
 
             let candle_lighting_node = $(nodes).find(':contains("Candle Lighting")')
@@ -162,13 +177,56 @@ export class SideCardContainer extends React.Component {
     }
 
     updateCurrWeather() {
+        fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=40.91149&lon=-73.78235&units=Imperial&appid=${Keys.openWeather}`).then(response => response.json()).then(data => {
+            this.setState(prevState => ({
+                ...prevState,
+                weather: {
+                    ...prevState.weather,
+                    currWeather: {
+                        ...prevState.weather.currWeather,
+                        isLoaded: true,
+                        icon: `http://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`,
+                        temp: `${Math.round(data.current.temp)}˚ ${data.current.weather[0].main}`
+                    }
+                }
+                
+            }))
+
+        })
+    }
+
+    updateForecast() {
+        let days = []
+        fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=40.91149&lon=-73.78235&units=Imperial&appid=${Keys.openWeather}`).then(response => response.json()).then(data => {
+            let today = new Date()
+            data.daily.forEach(day => {
+                today.setDate(today.getDate() + 1)
+                days.push({
+                    icon: `http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`,
+                    day: today.toLocaleDateString('default', {'weekday': 'long'}),
+                    temp: `${day.temp.max}/${day.temp.min}`
+                })
+            })
+        })
+
+        this.setState(prevState => ({
+            ...prevState,
+            weather: {
+                ...prevState.weather,
+                forecast: {
+                    ...prevState.weather.forecast,
+                    isLoaded: true,
+                    days: days
+                }
+            }
+        }))
 
     }
 
     render() {
         return (
             <div id='rightContainer'>
-                <WeatherCard updateCurrWeather={this.updateCurrWeather}></WeatherCard>
+                <WeatherCard updateCurrWeather={this.updateCurrWeather} updateForecast={this.updateForecast} data={this.state.weather}></WeatherCard>
                 <ListCard updateData={this.updateHolidays} data={this.state.holidays}></ListCard>
                 <ListCard updateData={this.updateShabbatTimes} data={this.state.shabbatTimes}></ListCard>
             </div>
