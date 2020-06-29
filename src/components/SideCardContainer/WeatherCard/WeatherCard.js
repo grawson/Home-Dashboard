@@ -37,7 +37,7 @@ export class WeatherCard extends React.Component {
             elems = <span>Loading...</span>
         else
             elems = this.props.data.forecast.days.map((e, idx) => <Forecast key={`forecast_${idx}`} icon={e.icon} day={e.day} temp={e.temp} ></Forecast>)
-
+        
             
         return (
             <div className='card'>
@@ -54,3 +54,6 @@ export class WeatherCard extends React.Component {
         )
     }
 }
+
+
+
