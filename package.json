@@ -27,7 +27,7 @@
   },
   "author": "Rawson Inc",
   "devDependencies": {
-    "electron": "~1.7.5",
+    "electron": "~8.0.1",
     "electron-builder": "^19.50.0"
   },
   "dependencies": {
