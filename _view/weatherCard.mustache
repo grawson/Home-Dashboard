@@ -1,6 +1,24 @@
-<div class="card-header">
-    <h3 class="center-xy">{{currentWeather}}</h3>
-    <div class="card-separator center-x"></div>
+<div class="weather-header">
+    <div class='flex-row weather-text-header'>
+        <img class="header-icon" src="{{currentWeatherIcon}}">
+        <h3>{{currentWeather}}</h3>
+
+    </div>
+    <div class="card-separator"></div>
+</div>
+
+<div id='hourly'>
+    <div id='hourly_container'>
+        {{#hours}}
+            <div class='daily-hour'>
+                <span class='time'>{{hour}}</span>
+                <span>{{hourTemp}}</span>
+                <span class='rain-perc'>{{hourRainPerc}}</span>
+            </div>
+        {{/hours}}
+    
+    </div>
+    <div class="card-separator center-x" style="margin-top:10px"></div>
 </div>
 
 
