@@ -4,91 +4,68 @@ const Cheerio = require('cheerio')
 const Axios = require('axios')
 const REFRESH_RATE = 60000;  // seconds
 
-
 const TEMPLATE = './_view/shabbatCard.mustache';
 
+const scrapeData = async callback => {
+  var parshaData = await $.get('https://www.hebcal.com/shabbat/?cfg=json&zip=10804&m=0')
 
-async function scrapeData(callback) {
-    var data = {
-        holidays: []
-    }
+  const parsha = parshaData.items.find(e => e.category == 'parashat').title
 
-    var webpage = await Axios.get('https://www.yinr.org/')
+  const holidays = [];
+  var webpage = await Axios.get('https://www.yinr.org/');
 
-    var html = await Cheerio.load(webpage.data)
+  const html = Cheerio.load(webpage.data);
 
-    var nodes = html('.two-fifth')[0].children[1].firstChild.firstChild
+  // candle lighting
+  const candleLightingMatch = html.text().match(/Candle Lighting: (\d:\d\dpm)/);
 
-    // this weeks parsha
-    var parshaData = await $.get('https://www.hebcal.com/shabbat/?cfg=json&zip=10804&m=0')
-    
-    data.parsha = parshaData.items.find(e => e.category == 'parashat').title
+  const candleLighting = candleLightingMatch && candleLightingMatch[1];
 
+  holidays.push({
+    title: 'Candle Lighting',
+    time: candleLighting
+  });
 
-    // candle lighting
+  // mincha times
+  const minchaMatches = html.text().match(/Mincha: (\d:\d\dpm)/g);
 
-    var candle_lighting_node = html(nodes).find(':contains("Candle Lighting")')
+  const friMincha = minchaMatches[0] && minchaMatches[0].split('Mincha: ')[1];
+  const shabMincha = minchaMatches[1] && minchaMatches[1].split('Mincha: ')[1];
 
-    try {
-        var timeRegex =  /\d{1,2}:\d*pm/
-    
-        cLTime = timeRegex.exec(html(candle_lighting_node).text())[0]
-    
-        data.holidays.push({
-            title: "Candle Lighting",
-            time: cLTime
-        })
-    }
-    catch(err){}
+  holidays.push({
+    title: 'Fri Mincha',
+    time: friMincha
+  });
 
-    // Mincha
-    var minchaNodes = html(nodes).find(":contains('Mincha')")
-    try {
-        var fridayMinchaTime = timeRegex.exec(html(minchaNodes[0]).text())[0]
-    
-        data.holidays.push({
-            title: "Friday Mincha",
-            time: fridayMinchaTime
-        })
-    }
-    catch (err) {}
-    try {
-        var satMinchaTime = timeRegex.exec(html(minchaNodes[2]).text())[0]
-        
-        data.holidays.push({
-            title: "Shabbat Mincha",
-            time: satMinchaTime
-        })
-    }
-    catch (err) {}
+  holidays.push({
+    title: 'Shab Mincha',
+    time: shabMincha
+  });
 
+  // havdala
+  const havdalaMatch = html.text().match(/Shabbat ends: (\d:\d\dpm)/);
 
-    // Havdala
-    try {
-        var havdalNodes = html(nodes).find(":contains('Shabbat Ends')")
-        havdalaTime = timeRegex.exec(html(havdalNodes).text())[0]
-    
-        data.holidays.push({
-            title: "Havdala",
-            time: havdalaTime
-        })
-    }
-    catch (err) {}
+  const havdala = havdalaMatch && havdalaMatch[1];
 
-    callback(data)
+  holidays.push({
+    title: 'Havdalah',
+    time: havdala
+  });
+
+  callback({ holidays, parsha });
 }
 
 function render(data) {
-    $.get(TEMPLATE, template => {
-        var rendered = Mustache.render(template, data);
-        $('#shabbat-card').html(rendered);
-    });
+  $.get(TEMPLATE, template => {
+    var rendered = Mustache.render(template, data);
+    $('#shabbat-card').html(rendered);
+  });
 }
 
 $(function () {
+  scrapeData(render);
+  window.setInterval(function () {
+    console.log("Reloading calendar data...");
     scrapeData(render);
-    window.setInterval(function() {
-        console.log("Reloading calendar data...");
-        scrapeData(render);
-    }, REFRESH_RATE*1000);
+  }, REFRESH_RATE * 1000);
 });

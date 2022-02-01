@@ -1,1 +1,1 @@
-exports.weatherKey = 'abN20MtDSkzU94JEGwOJRzdcrroneASB'
+exports.weatherKey = 'NzdhhtWnbp6AiHukCnl8pZwWsdAvkvlM'
