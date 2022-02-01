@@ -71,7 +71,7 @@ const getDailyWeather = async () => {
     const days = forecasts.slice(0, 6).map(day => ({
       weatherCode: day.values.weatherCode,
       forecastDay: DOW[new Date(day.startTime).getDay()],
-      forecastTemp: day.values.temperature
+      forecastTemp: `${Math.round(day.values.temperature)}°`
     }));
 
     return days;
