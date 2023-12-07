@@ -1,27 +1,34 @@
-# Home-Dashboard
-A dashboard for your every day needs! Deploy on a Raspberry Pi and hook up to a display in your home!
+# my-app
 
-Check out the [screenshot](https://github.com/grawson/Home-Dashboard/blob/master/screenshot.png) for a view of the UI.
+An Electron application with React and TypeScript
 
-Features include:
+## Recommended IDE Setup
 
-1. Calendar view using Google Calendar API
-2. Weather forecast
-3. Upcoming Jewish holidays
+- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
-All features are separate modules on the dashboard, which will allow room for more features to come! Check out
-the screenshot for a quick view.
+## Project Setup
 
-# To Run
-1. The project is built using Electron. Begin by adding a client_secret.json to `_script/auth` for Google Calendar authentication.
+### Install
 
-2. To authenticate, run command `npm run auth` and follow on-screen instructions.
+```bash
+$ npm install
+```
 
-3. Once authenticated, run `npm install && npm start`
+### Development
 
-4. Enjoy!
+```bash
+$ npm run dev
+```
 
-# Next Steps
+### Build
 
-The next step is to fix some good old bugs in the calendar card. I plan on rewriting the JS using datejs for 
-more robust date management. 
+```bash
+# For windows
+$ npm run build:win
+
+# For macOS
+$ npm run build:mac
+
+# For Linux
+$ npm run build:linux
+```
