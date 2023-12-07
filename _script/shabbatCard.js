@@ -17,7 +17,7 @@ const scrapeData = async callback => {
   const html = Cheerio.load(webpage.data);
 
   // candle lighting
-  const candleLightingMatch = html.text().match(/Candle Lighting: (\d:\d\dpm)/);
+  const candleLightingMatch = html.text().match(/Candle Lighting: (\d:\d\dpm)/i);
 
   const candleLighting = candleLightingMatch && candleLightingMatch[1];
 
@@ -27,7 +27,7 @@ const scrapeData = async callback => {
   });
 
   // mincha times
-  const minchaMatches = html.text().match(/Mincha: (\d:\d\dpm)/g);
+  const minchaMatches = html.text().match(/Mincha: (\d:\d\dpm)/gi);
 
   const friMincha = minchaMatches[0] && minchaMatches[0].split('Mincha: ')[1];
   const shabMincha = minchaMatches[1] && minchaMatches[1].split('Mincha: ')[1];
@@ -43,7 +43,7 @@ const scrapeData = async callback => {
   });
 
   // havdala
-  const havdalaMatch = html.text().match(/Shabbat ends: (\d:\d\dpm)/);
+  const havdalaMatch = html.text().match(/Shabbat ends: (\d:\d\dpm)/i);
 
   const havdala = havdalaMatch && havdalaMatch[1];
 
