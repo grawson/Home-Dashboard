@@ -160,98 +160,99 @@ function parseEvents(events) {
 }
 
 function render(eventData) {
-	var data = {};
+	// var data = {};
 
-	// Current day
-	data.currentDay = `${DOW[Date.today().getDay()]}, ${
-		MONTHS[Date.today().getMonth()]
-	} ${ordinalSuffixOf(Date.today().getDate())}, `;
-	data.currentTime = `${
-		new Date().getHours() % 12 ? new Date().getHours() % 12 : 12
-	}:${
-		new Date().getMinutes() < 10
-			? '0' + new Date().getMinutes()
-			: new Date().getMinutes()
-	}${new Date().getHours() > 12 ? 'pm' : 'am'}`;
-	// Days of week
-	data.dow = [];
-	for (var i = 0; i < 7; i++) {
-		data.dow.push({ dowTitle: DOW[i].charAt(0) });
-	}
+	// // Current day
+	// data.currentDay = `${DOW[Date.today().getDay()]}, ${
+	// 	MONTHS[Date.today().getMonth()]
+	// } ${ordinalSuffixOf(Date.today().getDate())}, `;
+	// data.currentTime = `${
+	// 	new Date().getHours() % 12 ? new Date().getHours() % 12 : 12
+	// }:${
+	// 	new Date().getMinutes() < 10
+	// 		? '0' + new Date().getMinutes()
+	// 		: new Date().getMinutes()
+	// }${new Date().getHours() > 12 ? 'pm' : 'am'}`;
+	// // Days of week
+	// data.dow = [];
+	// for (var i = 0; i < 7; i++) {
+	// 	data.dow.push({ dowTitle: DOW[i].charAt(0) });
+	// }
 
-	// Calculate start and end of the month
-	var firstDOM = Date.today().clearTime().moveToFirstDayOfMonth().getDay();
-	var numDaysInMonth = Date.getDaysInMonth(
-		Date.today().getYear(),
-		Date.today().getMonth()
-	);
-	var prevMonth = (-1).months().fromNow();
-	var numDaysInPrevMonth = Date.getDaysInMonth(
-		prevMonth.getYear(),
-		prevMonth.getMonth()
-	);
+	// // Calculate start and end of the month
+	// var firstDOM = Date.today().clearTime().moveToFirstDayOfMonth().getDay();
+	// var numDaysInMonth = Date.getDaysInMonth(
+	// 	Date.today().getYear(),
+	// 	Date.today().getMonth()
+	// );
+	// var prevMonth = (-1).months().fromNow();
+	// var numDaysInPrevMonth = Date.getDaysInMonth(
+	// 	prevMonth.getYear(),
+	// 	prevMonth.getMonth()
+	// );
 
-	var currDay = 1;
-	var currDayOffMonth = 1;
-	var prevMonthDayOffset = firstDOM - 1;
+	// var currDay = 1;
+	// var currDayOffMonth = 1;
+	// var prevMonthDayOffset = firstDOM - 1;
 
-	data.weeks = [];
-	var numRows = Math.ceil((numDaysInMonth + firstDOM) / 7.0);
-	data.weekHeight = 100 / numRows; // dynamically calc week height
-	for (var i = 1; i <= numRows; i++) {
-		// Only create necessary # rows in calendar
+	// data.weeks = [];
+	// var numRows = Math.ceil((numDaysInMonth + firstDOM) / 7.0);
+	// data.weekHeight = 100 / numRows; // dynamically calc week height
+	// for (var i = 1; i <= numRows; i++) {
+	// 	// Only create necessary # rows in calendar
 
-		data.weeks.push([{ weekNumber: i }]);
+	// 	data.weeks.push([{ weekNumber: i }]);
 
-		// Days
-		data.weeks[i - 1].days = [];
-		for (var j = 0; j < 7; j++) {
-			// Make sure day number is in the current month
-			var isToday = currDay === Date.today().getDate();
+	// 	// Days
+	// 	data.weeks[i - 1].days = [];
+	// 	for (var j = 0; j < 7; j++) {
+	// 		// Make sure day number is in the current month
+	// 		var isToday = currDay === Date.today().getDate();
 
-			if (currDay <= numDaysInMonth && (j >= firstDOM || i > 1)) {
-				currDayOffMonth = 1;
-				data.weeks[i - 1].days.push({
-					dayNumber: currDay,
-					dayColor: isToday ? 'today' : '',
-					dayBackground: isToday ? 'todayBackground' : '',
-				});
+	// 		if (currDay <= numDaysInMonth && (j >= firstDOM || i > 1)) {
+	// 			currDayOffMonth = 1;
+	// 			data.weeks[i - 1].days.push({
+	// 				dayNumber: currDay,
+	// 				dayColor: isToday ? 'today' : '',
+	// 				dayBackground: isToday ? 'todayBackground' : '',
+	// 			});
 
-				var dateOfEvent = new Date(Date.today().valueOf());
-				dateOfEvent.setDate(currDay);
-				initEvents(dateOfEvent, data.weeks[i - 1].days[j], eventData);
-				currDay++;
+	// 			var dateOfEvent = new Date(Date.today().valueOf());
+	// 			dateOfEvent.setDate(currDay);
+	// 			initEvents(dateOfEvent, data.weeks[i - 1].days[j], eventData);
+	// 			currDay++;
 
-				// Else either before or after this month
-			} else {
-				var currDayLabel =
-					j < firstDOM && i <= 1
-						? numDaysInPrevMonth - prevMonthDayOffset
-						: currDayOffMonth;
-				if (j < firstDOM && i <= 1) {
-					prevMonthDayOffset -= 1;
-				} else {
-					currDayOffMonth++;
-				}
+	// 			// Else either before or after this month
+	// 		} else {
+	// 			var currDayLabel =
+	// 				j < firstDOM && i <= 1
+	// 					? numDaysInPrevMonth - prevMonthDayOffset
+	// 					: currDayOffMonth;
+	// 			if (j < firstDOM && i <= 1) {
+	// 				prevMonthDayOffset -= 1;
+	// 			} else {
+	// 				currDayOffMonth++;
+	// 			}
 
-				data.weeks[i - 1].days.push({
-					dayNumber: currDayLabel,
-					dayColor: 'off-month',
-				});
+	// 			data.weeks[i - 1].days.push({
+	// 				dayNumber: currDayLabel,
+	// 				dayColor: 'off-month',
+	// 			});
 
-				dateOfEvent =
-					j < firstDOM && i <= 1
-						? Date.today().add(-1).months()
-						: Date.today().add(+1).months();
-				dateOfEvent.setDate(currDayLabel);
-				initEvents(dateOfEvent, data.weeks[i - 1].days[j], eventData);
-			}
-		}
-	}
+	// 			dateOfEvent =
+	// 				j < firstDOM && i <= 1
+	// 					? Date.today().add(-1).months()
+	// 					: Date.today().add(+1).months();
+	// 			dateOfEvent.setDate(currDayLabel);
+	// 			initEvents(dateOfEvent, data.weeks[i - 1].days[j], eventData);
+	// 		}
+	// 	}
+	// }
 
 	const days = getStartToEndDates();
 
 	const newData = {
+		dow: DOW.map(dow => ({ dowFirstLetter: dow.charAt(0) })),
 		days,
 	};
 
@@ -297,11 +298,12 @@ function ordinalSuffixOf(i) {
 }
 
 function load() {
-	calendarAuth.authorize(function (auth) {
-		listEvents(auth, function (eventData) {
-			render(eventData);
-		});
-	});
+	render();
+	// calendarAuth.authorize(function (auth) {
+	// 	listEvents(auth, function (eventData) {
+	// 		render(eventData);
+	// 	});
+	// });
 }
 
 function update_time() {
