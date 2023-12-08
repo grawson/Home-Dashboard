@@ -1,10 +1,23 @@
-<div>
-  {{#dow}}
-    <p>{{dowFirstLetter}}</p>
-  {{/dow}}
+<div class="card-header flex-row">
+  <h3 class="center-xy">{{currentDay}}<span id='currTime'>{{currentTime}}</span></h3> 
+</div>
+
+<div id="calendar-content-container">
+    {{#dow}}
+    <div class='dow-container'><p>{{dowFirstLetter}}</p></div>
+    {{/dow}}
 
   {{#days}}
-    <div>I am a day</div>
-  {{/days}}
+    <div class='day-container {{dayBackground}}'>
+      <p class="day-number {{dayColor}}">{{dayOfMonth}}</p>
 
+      {{#events}}
+        <div class="event-content-container">
+          <div class="event-tag"></div>
+          <p class="event-details">{{eventTitle}}</p>
+          <div><p class="event-time">{{eventTime}}</p></div>
+        </div>
+        {{/events}}
+    </div>
+  {{/days}}
 </div>
