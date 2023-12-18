@@ -1,37 +1,37 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
+	<head>
+		<title>Dashboard</title>
+		<link rel="stylesheet" type="text/css" href="./_css/global/cssReset.css" />
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="./_css/global/formatting.css"
+		/>
+		<link rel="stylesheet" type="text/css" href="./_css/cardsContainer.css" />
+		<link rel="stylesheet" type="text/css" href="./_css/card.css" />
+		<link rel="stylesheet" type="text/css" href="./_css/calendarCard.css" />
+		<link rel="stylesheet" type="text/css" href="./_css/weatherCard.css" />
+		<link rel="stylesheet" type="text/css" href="./_css/holidaysCard.css" />
+	</head>
 
-<head>
-    <title>Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="./_css/global/cssReset.css">
-    <link rel="stylesheet" type="text/css" href="./_css/global/formatting.css">
-    <link rel="stylesheet" type="text/css" href="./_css/cardsContainer.css">
-    <link rel="stylesheet" type="text/css" href="./_css/card.css">
-    <link rel="stylesheet" type="text/css" href="./_css/calendarCard.css">
-    <link rel="stylesheet" type="text/css" href="./_css/weatherCard.css">
-    <link rel="stylesheet" type="text/css" href="./_css/holidaysCard.css">
-</head>
+	<body>
+		<div class="card-container">
+			<div id="calendar-card" class="card"></div>
 
-<body>
-    <div class='card-container'>
-        <div id="calendar-card" class="card"></div>
-    
-        <div id="right-container">
-            <div id="weather-card" class="card"></div>
-            <div id="holidays-card" class="card"></div>
-            <div id="shabbat-card" class="card"></div>
-        </div>
+			<div id="right-container">
+				<div id="weather-card" class="card"></div>
+				<div id="holidays-card" class="card"></div>
+				<div id="shabbat-card" class="card shrink"></div>
+			</div>
+		</div>
+	</body>
 
-    </div>
-
-</body>
-
-<script>
-require("./_script/jquerySetup.js");
-require('./_script/calendarCard.js');
-require('./_script/weatherCard.js');
-require('./_script/holidaysCard.js');
-require('./_script/shabbatCard.js');
-</script>
-
+	<script>
+		require('./_script/jquerySetup.js');
+		require('./_script/calendarCard.js');
+		require('./_script/weatherCard.js');
+		require('./_script/holidaysCard.js');
+		require('./_script/shabbatCard.js');
+	</script>
 </html>
