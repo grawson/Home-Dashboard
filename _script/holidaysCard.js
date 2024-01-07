@@ -1,6 +1,7 @@
 // VAR ****************************************************************************************************************
 
 const Mustache = require('mustache');
+const { getPaddedMonth, getPaddedDay } = require('./tools/date');
 require('datejs');
 
 const today = new Date();
