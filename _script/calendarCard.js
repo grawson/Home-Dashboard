@@ -1,5 +1,5 @@
 const Mustache = require('mustache');
-const calendarAuth = require('./auth/CalendarAuth');
+// const calendarAuth = require('./auth/CalendarAuth');
 const google = require('googleapis');
 require('datejs');
 
@@ -251,14 +251,14 @@ function update_time() {
 }
 
 $(document).ready(function () {
-	load();
-	window.setInterval(function () {
-		console.log('Reloading calendar data...');
-		load();
-	}, REFRESH_RATE * 1000);
+	// load();
+	// window.setInterval(function () {
+	// 	console.log('Reloading calendar data...');
+	// 	load();
+	// }, REFRESH_RATE * 1000);
 
-	window.setInterval(() => {
-		console.log('Updating time');
-		update_time();
-	}, 1000);
+	// window.setInterval(() => {
+	// 	console.log('Updating time');
+	// 	update_time();
+	// }, 10000);
 });

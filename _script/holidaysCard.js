@@ -3,8 +3,7 @@
 const Mustache = require("mustache");
 require('datejs');
 
-const REQUEST = "http://www.hebcal.com/hebcal/?v=1&cfg=json&maj=on&min=on&mod=on&nx=on&year=now&month=x&ss=on&mf=on&c=off&s=off";
-// const REQUEST = "http://www.hebcal.com/hebcal/?v=1&cfg=json&maj=on&min=on&mod=on&nx=on&year=now&month=x&ss=on&mf=on&c=on&geo=geoname&geonameid=5128549&m=50&s=off";
+const REQUEST = "http://www.hebcal.com/hebcal/?v=1&cfg=json&maj=on&min=on&mod=on&nx=on&year=now&month=x&ss=on&mf=on&c=on&geo=geoname&geonameid=5128549&m=50&s=off";
 const TEMPLATE = './_view/holidaysCard.mustache';
 const MAX_RESULTS = 10;
 const REFRESH_RATE = 21600;  // seconds
