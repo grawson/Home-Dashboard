@@ -49,7 +49,7 @@ function setup() {
 	var credentials = require(SECRET_PATH);
 	var clientSecret = credentials.installed.client_secret;
 	var clientId = credentials.installed.client_id;
-	var redirectUrl = credentials.installed.redirect_uris?.[0];
+	var redirectUrl = credentials.installed.redirect_uris[0];
 	var auth = new googleAuth();
 	return new auth.OAuth2(clientId, clientSecret, redirectUrl);
 }
