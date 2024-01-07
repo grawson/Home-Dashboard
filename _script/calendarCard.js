@@ -1,5 +1,5 @@
 const Mustache = require('mustache');
-// const calendarAuth = require('./auth/CalendarAuth');
+const calendarAuth = require('./auth/CalendarAuth');
 const google = require('googleapis');
 require('datejs');
 
