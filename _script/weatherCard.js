@@ -41,8 +41,7 @@ const weatherCodes = {
 };
 
 const getHourlyWeather = async () => {
-	const url = `https://api.tomorrow.io/v4/timelines?location=${LOCATION[0]}, ${LOCATION[1]}&fields=precipitationProbability&fields=temperature&fields=weatherCode&units=imperial&timesteps=1h&apikey=${Keys.weatherKey}`
-	console.log(url)
+	const url = `https://api.tomorrow.io/v4/timelines?location=${LOCATION[0]},${LOCATION[1]}&fields=precipitationProbability&fields=temperature&fields=weatherCode&units=imperial&timesteps=1h&apikey=${Keys.weatherKey}`
 	const { data } = await fetch(url)
 	.then(response => {
 		return response.json();
@@ -74,9 +73,10 @@ const getHourlyWeather = async () => {
 };
 
 const getDailyWeather = async () => {
-	const url = `https://api.tomorrow.io/v4/timelines?location=${LOCATION[0]}, ${LOCATION[1]}&fields=temperature&fields=weatherCode&units=imperial&timesteps=1d&apikey=${Keys.weatherKey}`;
+	const url = `https://api.tomorrow.io/v4/timelines?location=${LOCATION[0]},${LOCATION[1]}&fields=temperature&fields=weatherCode&units=imperial&timesteps=1d&apikey=${Keys.weatherKey}`;
 	const { data } = await fetch(url)
 	.then(response => {
+		console.log(response)
 		return response.json();
 	});
 	const forecasts =
