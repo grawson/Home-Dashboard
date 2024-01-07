@@ -114,8 +114,8 @@ async function loadWeather() {
 
 $(document).ready(function () {
 	loadWeather();
-	// window.setInterval(function () {
-	//   console.log("Reloading weather data...");
-	//   loadWeather();
-	// }, REFRESH_RATE * 1000);
+	window.setInterval(function () {
+		console.log('Reloading weather data...');
+		loadWeather();
+	}, REFRESH_RATE * 1000);
 });

@@ -51,10 +51,6 @@ const getFormattedDate = date => {
 	};
 };
 
-function listEvents(auth, callback) {
-	var eventData = {};
-}
-
 const getStartToEndDates = () => {
 	const days = [];
 
@@ -162,13 +158,6 @@ function render() {
 			: new Date().getMinutes()
 	}${new Date().getHours() > 12 ? 'pm' : 'am'}`;
 
-	const data = {
-		dow: DOW.map(dow => ({ dowFirstLetter: dow.charAt(0) })),
-		days,
-		currentDay,
-		currentTime,
-	};
-
 	const auth = calendarAuth.authorize();
 
 	calendar.events.list(
@@ -184,23 +173,35 @@ function render() {
 		function (err, response) {
 			if (err) {
 				console.log('The API returned an error: ' + err);
-				return;
 			}
-			var events = response.items;
-			if (events.length == 0) {
-				console.log('No upcoming events found.');
-			} else {
-				eventData = parseEvents(events);
+
+			if (response && response.items) {
+				var events = response.items;
+				if (events.length == 0) {
+					console.log('No upcoming events found.');
+				} else {
+					eventData = parseEvents(events);
+				}
+
+				for (const day of days) {
+					var dateOfEvent = day.date;
+					initEvents(dateOfEvent, day, eventData);
+				}
 			}
+
+			const data = {
+				dow: DOW.map(dow => ({ dowFirstLetter: dow.charAt(0) })),
+				days,
+				currentDay,
+				currentTime,
+			};
+
+			$.get('./_view/calendarCard.mustache', function (template) {
+				var rendered = Mustache.render(template, data);
+				$('#calendar-card').html(rendered);
+			});
 		}
 	);
-
-	const renderStache = () => {
-		$.get('./_view/calendarCard.mustache', function (template) {
-			var rendered = Mustache.render(template, data);
-			$('#calendar-card').html(rendered);
-		});
-	};
 }
 
 // Init events mustache data
