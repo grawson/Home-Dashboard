@@ -29,8 +29,8 @@ const scrapeData = async callback => {
   // mincha times
   const minchaMatches = html.text().match(/Mincha: (\d:\d\dpm)/gi);
 
-  const friMincha = minchaMatches[0] && minchaMatches[0].split('Mincha: ')[1];
-  const shabMincha = minchaMatches[1] && minchaMatches[1].split('Mincha: ')[1];
+  const friMincha = minchaMatches && minchaMatches[0] && minchaMatches[0].split('Mincha: ')[1];
+  const shabMincha = minchaMatches && minchaMatches[1] && minchaMatches[1].split('Mincha: ')[1];
 
   holidays.push({
     title: 'Fri Mincha',
