@@ -1,7 +1,8 @@
 const Mustache = require("mustache");
 require('datejs');
 const Cheerio = require('cheerio')
-const Axios = require('axios')
+const Axios = require('axios');
+const { getNextDayOfWeek, getFormattedDateForYINR } = require("./tools/date");
 const REFRESH_RATE = 60000;  // seconds
 
 const TEMPLATE = './_view/shabbatCard.mustache';
@@ -12,13 +13,20 @@ const scrapeData = async callback => {
   const parsha = parshaData.items.find(e => e.category == 'parashat').title
 
   const holidays = [];
-  var webpage = await Axios.get('https://www.yinr.org/');
+  const fridayDate  = getNextDayOfWeek(new Date(), 5);
+  const fridayDateString = fridayDate && getFormattedDateForYINR(fridayDate);
+  const saturdayDate  = getNextDayOfWeek(new Date(), 6);
+  const saturdayDateString = saturdayDate && getFormattedDateForYINR(saturdayDate);
+
+  var webpage = await Axios.get(`https://www.yinr.org/calendar?advanced=Y&calendar=&date_start=specific+date&date_start_x=0&date_start_date=${fridayDateString}&has_second_date=Y&date_end=specific+date&date_end_x=0&date_end_date=${saturdayDateString}&view=day&day_view_horizontal=N`);
 
   const html = Cheerio.load(webpage.data);
 
-  // candle lighting
-  const candleLightingMatch = html.text().match(/Candle Lighting: (\d:\d\dpm)/i);
+  const htmlText = html.text();
 
+  // candle lighting
+  const candleLightingMatch = htmlText.match(/\b(\d{1,2}:\d{2}(?:am|pm))\s+Candle Lighting\b/i);
+  
   const candleLighting = candleLightingMatch && candleLightingMatch[1];
 
   holidays.push({
@@ -27,10 +35,12 @@ const scrapeData = async callback => {
   });
 
   // mincha times
-  const minchaMatches = html.text().match(/Mincha: (\d:\d\dpm)/gi);
-
-  const friMincha = minchaMatches && minchaMatches[0] && minchaMatches[0].split('Mincha: ')[1];
-  const shabMincha = minchaMatches && minchaMatches[1] && minchaMatches[1].split('Mincha: ')[1];
+  const minchaMatches = htmlText.match(/\b\d{1,2}:\d{2}(?:am|pm)\s+Mincha\b/ig)
+  
+  const friMinchaMatch = minchaMatches && minchaMatches[0].match(/\b\d{1,2}:\d{2}(?:am|pm)/);
+  const friMincha = friMinchaMatch && friMinchaMatch[0];
+  const shabMinchaMatch = minchaMatches && minchaMatches[1].match(/\b\d{1,2}:\d{2}(?:am|pm)/);
+  const shabMincha = shabMinchaMatch && shabMinchaMatch[0];
 
   holidays.push({
     title: 'Fri Mincha',
@@ -43,7 +53,7 @@ const scrapeData = async callback => {
   });
 
   // havdala
-  const havdalaMatch = html.text().match(/Shabbat ends: (\d:\d\dpm)/i);
+  const havdalaMatch = htmlText.match(/\b(\d{1,2}:\d{2}(?:am|pm))\s+Shabbat Ends\b/i);
 
   const havdala = havdalaMatch && havdalaMatch[1];
 
