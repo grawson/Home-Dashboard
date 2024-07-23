@@ -15,11 +15,13 @@ const scrapeData = async callback => {
 	const parsha = parshaData.items.find(e => e.category == 'parashat').title;
 
 	const holidays = [];
-	const fridayDate = getNextDayOfWeek(new Date(), 5);
-	const fridayDateString = fridayDate && getFormattedDateForYINR(fridayDate);
 	const saturdayDate = getNextDayOfWeek(new Date(), 6);
 	const saturdayDateString =
 		saturdayDate && getFormattedDateForYINR(saturdayDate);
+	const fridayDate = new Date(
+		new Date(saturdayDate).setDate(new Date(saturdayDate.getDate() - 1))
+	);
+	const fridayDateString = fridayDate && getFormattedDateForYINR(fridayDate);
 
 	const url = `https://www.yinr.org/calendar?advanced=Y&calendar=&date_start=specific+date&date_start_x=0&date_start_date=${fridayDateString}&has_second_date=Y&date_end=specific+date&date_end_x=0&date_end_date=${saturdayDateString}&view=day&day_view_horizontal=N`;
 
