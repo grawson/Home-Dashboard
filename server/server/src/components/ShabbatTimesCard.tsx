@@ -1,9 +1,11 @@
+import { getFormattedDateForYINR, getNextDayOfWeek } from "#/tools/dates";
 import { useQuery } from "@tanstack/react-query";
 import { createServerFn, useServerFn } from "@tanstack/react-start";
 import axios from "axios";
 import * as cheerio from 'cheerio';
-import { getFormattedDateForYINR, getNextDayOfWeek } from "../../../../vite/src/tools/dates";
 import Card from "./Card";
+
+const REFRESH_RATE = 60000; // seconds
 
 export const getServerShabbatData = createServerFn().handler(async () => {
     var parshaResponse = await axios.get(
@@ -107,6 +109,7 @@ export default function ShabbatTimesCard() {
     const { data } = useQuery({
         queryKey: ['shabbat-data'],
         queryFn: () => getShabbatData(),
+        refetchInterval: REFRESH_RATE * 1000
     })
 
     const { parsha = '', times = [] } = data || {}
