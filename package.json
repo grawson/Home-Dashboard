@@ -1,42 +1,68 @@
 {
   "name": "Dashboard",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A dashboard for common household needs.",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "auth": "./_script/auth/auth.sh",
-    "pi": "export DISPLAY=:0 && npm start",
-    "dist": "electron-builder"
-  },
-  "build": {
-    "appId": "your.id",
-    "mac": {
-      "category": "your.app.category.type"
-    },
-    "linux": {
-      "target": [
-        "AppImage",
-        "deb"
-      ]
-    },
-    "win": {
-      "target": "squirrel",
-      "icon": "build/icon.ico"
-    }
-  },
   "author": "Rawson Inc",
-  "devDependencies": {
-    "electron": "~1.7.5",
-    "electron-builder": "^19.50.0"
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#/*": "./src/*"
+  },
+  "scripts": {
+    "dev": "vite dev --port 3000",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "lint": "eslint",
+    "format": "prettier --check .",
+    "check": "prettier --write . && eslint --fix",
+    "tsc": "tsc --watch"
   },
   "dependencies": {
-    "axios": "^0.19.2",
-    "cheerio": "^1.0.0-rc.10",
-    "datejs": "^1.0.0-rc3",
-    "googleapis": "^21.3.0",
-    "jquery": "^3.5.1",
-    "mustache": "^2.3.0",
-    "openweathermap-js": "^1.0.1"
+    "@tailwindcss/vite": "^4.1.18",
+    "@tanstack/react-devtools": "latest",
+    "@tanstack/react-query": "latest",
+    "@tanstack/react-query-devtools": "latest",
+    "@tanstack/react-router": "latest",
+    "@tanstack/react-router-devtools": "latest",
+    "@tanstack/react-router-ssr-query": "latest",
+    "@tanstack/react-start": "latest",
+    "@tanstack/router-plugin": "^1.132.0",
+    "axios": "^1.13.6",
+    "cheerio": "^1.2.0",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "google-auth-library": "^10.6.1",
+    "googleapis": "^171.4.0",
+    "lucide-react": "^0.545.0",
+    "nitro": "npm:nitro-nightly@latest",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16",
+    "@tanstack/devtools-vite": "latest",
+    "@tanstack/eslint-config": "latest",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.1.4",
+    "jsdom": "^28.1.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "typescript": "^5.7.2",
+    "vite": "^7.3.1",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.0.5"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "lightningcss"
+    ]
   }
 }
