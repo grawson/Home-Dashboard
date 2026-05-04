@@ -2,7 +2,7 @@ import { DOW } from '#/config'
 import WeatherTestData from '#/test-data/weather'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import Card from './Card'
 
 const REFRESH_RATE = 14400 // seconds
@@ -69,7 +69,7 @@ const useHourlyWeather = () => {
 
       if (forecasts) {
         const hours = forecasts.slice(1, 7).map((hour) => ({
-          hour: format(new Date(hour.startTime), 'h'),
+          hour: format(parseISO(hour.startTime), 'h'),
           hourTemp: `${Math.round(hour.values.temperature)}°`,
           hourRainPerc: `${hour.values.precipitationProbability}%`,
         }))
@@ -110,7 +110,7 @@ const useDailyWeather = () => {
       if (forecasts) {
         const days = forecasts.slice(0, 6).map((day) => ({
           weatherCode: day.values.weatherCode,
-          forecastDay: DOW[new Date(day.startTime).getDay()],
+          forecastDay: DOW[parseISO(day.startTime).getDay()],
           forecastTemp: `${Math.round(day.values.temperature)}°`,
         }))
 
@@ -137,15 +137,15 @@ export default function WeatherCard() {
       }
       className="shrink-0"
     >
-      <div className="flex justify-between mx-5 border-b border-border py-1">
+      <div className="border-border mx-5 flex justify-between border-b py-1">
         {hourlyError ? (
-          <p className="h-full w-full justify-center flex items-center">
+          <p className="flex h-full w-full items-center justify-center">
             {hourlyError.message}
           </p>
         ) : (
           (hourlyWeather?.hours || []).map((hour) => (
-            <div key={hour.hour} className="flex flex-col text-center  text-xs">
-              <span className="text-[10px] text-grey-600">{hour.hour}</span>
+            <div key={hour.hour} className="flex flex-col text-center text-xs">
+              <span className="text-grey-600 text-[10px]">{hour.hour}</span>
               <span>{hour.hourTemp}</span>
               <span className="text-blue-200">{hour.hourRainPerc}</span>
             </div>
@@ -154,15 +154,15 @@ export default function WeatherCard() {
       </div>
 
       {dailyError ? (
-        <p className="h-full w-full justify-center flex items-center">
+        <p className="flex h-full w-full items-center justify-center">
           {dailyError.message}
         </p>
       ) : (
-        <div className="p-1 grid grid-cols-2 grid-rows-3 overflow-hidden h-full place-items-center gap-y-2">
+        <div className="grid h-full grid-cols-2 grid-rows-3 place-items-center gap-y-2 overflow-hidden p-1">
           {dailyWeather.map((day) => (
             <div
               key={day.forecastDay}
-              className="flex flex-col text-center items-center text-xs"
+              className="flex flex-col items-center text-center text-xs"
             >
               <img
                 className="h-5 w-fit"

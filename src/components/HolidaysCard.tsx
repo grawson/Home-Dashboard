@@ -2,7 +2,7 @@ import TestHolidayData from '#/test-data/holidays'
 import { getPaddedDay, getPaddedMonth } from '#/tools/dates'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import Card from './Card'
 
 const MAX_RESULTS = 10
@@ -20,9 +20,7 @@ const useHolidays = () => {
       const today = new Date()
       const start = `${today.getFullYear()}-${getPaddedMonth(today)}-${getPaddedDay(today)}`
 
-      const nextYear = new Date(
-        new Date().setFullYear(new Date().getFullYear() + 1),
-      )
+      const nextYear = new Date(new Date().setFullYear(today.getFullYear() + 1))
 
       const end = `${nextYear.getFullYear()}-${getPaddedMonth(nextYear)}-${getPaddedDay(nextYear)}`
 
@@ -34,8 +32,8 @@ const useHolidays = () => {
       const holidays = []
 
       for (const item of json.items) {
-        const itemDate = new Date(item.date)
-        if (new Date() > itemDate) {
+        const itemDate = parseISO(item.date)
+        if (today > itemDate) {
           continue
         } // ensure date is later than today
         if (holidays.length >= MAX_RESULTS) {
@@ -61,17 +59,17 @@ export default function HolidaysCard() {
   return (
     <Card header="Holidays">
       {error ? (
-        <p className="h-full w-full justify-center flex items-center">
+        <p className="flex h-full w-full items-center justify-center">
           {error.message}
         </p>
       ) : (
         data.map((holiday) => (
           <div
             key={holiday.title}
-            className="flex justify-between items-center py-1 mx-5"
+            className="mx-5 flex items-center justify-between py-1"
           >
             <p className="text-sm">{holiday.title}</p>
-            <p className="text-sm text-grey-600">
+            <p className="text-grey-600 text-sm">
               {format(holiday.date, 'M/d')}
             </p>
           </div>

@@ -4,7 +4,7 @@ import CalendarTestData from '#/test-data/calendar'
 import { cn } from '#/tools/css'
 import { useQuery } from '@tanstack/react-query'
 import { createServerFn, useServerFn } from '@tanstack/react-start'
-import { addDays, format, startOfWeek } from 'date-fns'
+import { addDays, format, parseISO, startOfWeek } from 'date-fns'
 import { google } from 'googleapis'
 import { useEffect, useState } from 'react'
 import Card from './Card'
@@ -60,8 +60,8 @@ function parseEvents(events: any) {
       continue
     }
 
-    const startDate = new Date(start)
-    const endDate = new Date(end)
+    const startDate = parseISO(start)
+    const endDate = parseISO(end)
 
     // All day event: time zone must be set to UTC +0
     if (start && start.indexOf('T') == -1) {
@@ -230,13 +230,13 @@ export default function CalendarCard() {
   return (
     <Card header={`${date}, ${time}`} className="divide-y-0">
       {error ? (
-        <p className="h-full w-full justify-center flex items-center">
+        <p className="flex h-full w-full items-center justify-center">
           {error.message}
         </p>
       ) : (
-        <div className="grid grid-cols-7 grid-rows-[auto_repeat(5,1fr)] h-full">
+        <div className="grid h-full grid-cols-7 grid-rows-[auto_repeat(5,1fr)]">
           {DOW.map((dow) => (
-            <p key={dow} className="text-center text-grey-600 text-sm">
+            <p key={dow} className="text-grey-600 text-center text-sm">
               {dow.charAt(0)}
             </p>
           ))}
@@ -244,18 +244,18 @@ export default function CalendarCard() {
           {days.map((day) => (
             <div
               key={day.date.toString()}
-              className={cn('flex border-border border-t border-r')}
+              className={cn('border-border flex border-t border-r')}
             >
               <div
                 className={cn(
-                  'flex flex-col h-full w-full p-1',
+                  'flex h-full w-full flex-col p-1',
                   day.isToday && 'bg-butter-100',
                   !day.isCurrentMonth && 'opacity-30',
                 )}
               >
                 <p
                   className={cn(
-                    'pb-2.5 font-semibold text-sm',
+                    'pb-2.5 text-sm font-semibold',
                     day.isToday && 'text-salmon font-semibold',
                   )}
                 >
@@ -269,12 +269,12 @@ export default function CalendarCard() {
                   >
                     <span className="bg-salmon rounded-lg" />
 
-                    <p className="truncate whitespace-nowrap text-sm">
+                    <p className="truncate text-sm whitespace-nowrap">
                       {event.eventTitle}
                     </p>
 
                     <div>
-                      <p className="text-xs text-grey-600 text-right  relative top-[75%] -translate-y-[75%] whitespace-nowrap">
+                      <p className="text-grey-600 relative top-[75%] -translate-y-[75%] text-right text-xs whitespace-nowrap">
                         {event.eventTime}
                       </p>
                     </div>
