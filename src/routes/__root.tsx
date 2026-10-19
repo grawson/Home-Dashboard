@@ -48,7 +48,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
 
-      <body className="font-lato antialiased wrap-anywhere selection:bg-[rgba(79,184,178,0.24)]">
+      <body className="font-lato text-ink antialiased wrap-anywhere selection:bg-[rgba(79,184,178,0.24)]">
         <TanStackQueryProvider>
           {children}
 

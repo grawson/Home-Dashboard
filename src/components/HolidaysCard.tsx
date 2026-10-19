@@ -57,23 +57,27 @@ export default function HolidaysCard() {
   const { data = [], error } = useHolidays()
 
   return (
-    <Card header="Holidays">
+    <Card header="Holidays" className="min-h-0">
       {error ? (
         <p className="flex h-full w-full items-center justify-center">
           {error.message}
         </p>
       ) : (
-        data.map((holiday) => (
-          <div
-            key={holiday.title}
-            className="mx-5 flex items-center justify-between py-1"
-          >
-            <p className="text-sm">{holiday.title}</p>
-            <p className="text-grey-600 text-sm">
-              {format(holiday.date, 'M/d')}
-            </p>
-          </div>
-        ))
+        // Rows that don't fully fit wrap into a hidden second column,
+        // so we never show a half-cut row
+        <div className="flex h-full flex-col flex-wrap overflow-hidden">
+          {data.map((holiday) => (
+            <div
+              key={`${holiday.title}-${holiday.date.toISOString()}`}
+              className="flex w-full items-center justify-between px-5 py-1"
+            >
+              <p className="text-sm">{holiday.title}</p>
+              <p className="text-grey-600 text-sm">
+                {format(holiday.date, 'M/d')}
+              </p>
+            </div>
+          ))}
+        </div>
       )}
     </Card>
   )

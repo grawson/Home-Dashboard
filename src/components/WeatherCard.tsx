@@ -77,7 +77,7 @@ const useHourlyWeather = () => {
         const currentWeatherCode = forecasts[0].values.weatherCode
         const currentWeatherText = WEATHER_CODES[currentWeatherCode]
         const currentTemp = forecasts[0].values.temperature
-        const currentWeather = `${currentTemp}° ${currentWeatherText}`
+        const currentWeather = `${Math.round(currentTemp)}° ${currentWeatherText}`
 
         return {
           currentWeather,
@@ -145,7 +145,7 @@ export default function WeatherCard() {
         ) : (
           (hourlyWeather?.hours || []).map((hour) => (
             <div key={hour.hour} className="flex flex-col text-center text-xs">
-              <span className="text-grey-600 text-[10px]">{hour.hour}</span>
+              <span className="text-grey-600 text-xs">{hour.hour}</span>
               <span>{hour.hourTemp}</span>
               <span className="text-blue-200">{hour.hourRainPerc}</span>
             </div>
