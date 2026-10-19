@@ -20,7 +20,7 @@ export default function Card({
       {...props}
     >
       <div className="flex mx-5 py-2 text-xl text-salmon justify-center h-fit">
-        <p className="text-base font-semibold">{header}</p>
+        <div className="text-base font-semibold">{header}</div>
       </div>
 
       <div className="flex flex-col h-full overflow-hidden">{children}</div>
