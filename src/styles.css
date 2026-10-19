@@ -2,12 +2,14 @@
 
 :root {
     --background: #1e1d29;
-    --salmon: #FF8479;
+    --salmon: #B5453A; /* deep enough for text: 4.5:1+ on surface and butter */
+    --ink: #1e1d29;
 
-    --grey-300: #E9E9E9;
-    --grey-600: #686868;
+    --surface: #F7F5F0; /* warm off-white card background */
+    --grey-300: #E6E2DA;
+    --grey-600: #555555;
 
-    --butter-100: #fff7db;
+    --butter-100: #FBEDC2;
 
     --blue-200: #494b86;
 
@@ -16,6 +18,8 @@
 @theme inline {
     --color-background: var(--background);
     --color-salmon: var(--salmon);
+    --color-surface: var(--surface);
+    --color-ink: var(--ink);
     --color-border: var(--grey-300);
     --color-grey-600: var(--grey-600);
     --color-butter-100: var(--butter-100);

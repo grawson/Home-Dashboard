@@ -14,13 +14,13 @@ export default function Card({
   return (
     <div
       className={cn(
-        'flex flex-col divide-y divide-border overflow-hidden bg-white rounded-lg shadow-lg grow',
+        'flex flex-col divide-y divide-border overflow-hidden bg-surface rounded-lg shadow-lg grow',
         className,
       )}
       {...props}
     >
       <div className="flex mx-5 py-2 text-xl text-salmon justify-center h-fit">
-        <p className="text-base">{header}</p>
+        <p className="text-base font-semibold">{header}</p>
       </div>
 
       <div className="flex flex-col h-full overflow-hidden">{children}</div>

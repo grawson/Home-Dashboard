@@ -117,19 +117,22 @@ export default function ShabbatTimesCard() {
   const { parsha = '', times = [] } = data || {}
 
   return (
-    <Card header={parsha}>
-      {error ? (
-        <p className="h-full w-full justify-center flex items-center">
-          {error.message}
-        </p>
-      ) : (
-        times.map((time) => (
-          <div key={time.title} className="flex justify-between mx-5 grow py-1">
-            <p className="text-sm">{time.title}</p>
-            <p className="text-sm text-grey-600">{time.time}</p>
-          </div>
-        ))
-      )}
+    // Never shrink: always room for at least 4 rows (28px each)
+    <Card header={parsha} className="shrink-0 grow-0">
+      <div className="flex min-h-28 flex-col pb-2">
+        {error ? (
+          <p className="flex h-full w-full items-center justify-center">
+            {error.message}
+          </p>
+        ) : (
+          times.map((time) => (
+            <div key={time.title} className="mx-5 flex justify-between py-1">
+              <p className="text-sm">{time.title}</p>
+              <p className="text-grey-600 text-sm">{time.time}</p>
+            </div>
+          ))
+        )}
+      </div>
     </Card>
   )
 }

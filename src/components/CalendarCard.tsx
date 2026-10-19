@@ -250,21 +250,22 @@ export default function CalendarCard() {
                 className={cn(
                   'flex h-full w-full flex-col p-1',
                   day.isToday && 'bg-butter-100',
-                  !day.isCurrentMonth && 'opacity-30',
                 )}
               >
                 <p
                   className={cn(
-                    'pb-2.5 text-sm font-semibold',
+                    'pb-2.5 text-sm font-semibold whitespace-nowrap',
                     day.isToday && 'text-salmon font-semibold',
                   )}
                 >
-                  {day.dayOfMonth}
+                  {day.dayOfMonth === 1
+                    ? `${MONTHS[new Date(day.date).getMonth()].slice(0, 3)} 1`
+                    : day.dayOfMonth}
                 </p>
 
-                {day.events.map((event) => (
+                {day.events.map((event, i) => (
                   <div
-                    key={event.eventTitle}
+                    key={`${event.eventTitle}-${event.eventTime}-${i}`}
                     className="grid grid-cols-[2px_auto_auto] gap-x-1 pb-1"
                   >
                     <span className="bg-salmon rounded-lg" />
